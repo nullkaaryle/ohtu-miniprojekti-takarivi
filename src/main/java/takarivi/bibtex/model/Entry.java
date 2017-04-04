@@ -5,10 +5,33 @@
  */
 package takarivi.bibtex.model;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  *
  * @author pyykkomi
  */
 public class Entry {
+    private Set<Field> fields;
     
+    public Entry() {
+        this.fields = new TreeSet<>();
+    }
+
+    public Set<Field> getFields() {
+        return fields;
+    }
+
+    public void setFields(Set<Field> fields) {
+        this.fields = fields;
+    }
+    
+    public void addField(Field field) {
+        fields.add(field);
+    }
+    
+    public void removeField(Field field) {
+        fields.remove(field);
+    }
 }
