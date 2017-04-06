@@ -5,10 +5,27 @@
  */
 package takarivi.bibtex.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import takarivi.bibtex.model.Entry;
+
 /**
  *
  * @author pyykkomi
  */
 public class EntryHandler {
     
+    private List<Entry> entries;
+    
+    public EntryHandler() {
+        entries = new ArrayList<>();
+    }
+    
+    public void addEntry(Entry entry) {
+        entries.add(entry);
+    }
+    
+    public List<Entry> getEntries() {
+        return entries;
+    }
 }

@@ -30,7 +30,8 @@ public class Entry {
     }
     
     public void addField(Field field) {
-        if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType())) {
+        if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType()))
+        {
             fields.add(field);
         } else {
             // doom;
