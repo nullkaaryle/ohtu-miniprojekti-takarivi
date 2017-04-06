@@ -14,7 +14,7 @@ import takarivi.bibtex.view.TextUI;
 public class Main {
     
     public static void main(String[] args) {
-        TextUI
+        
         IO io = new IOSystem_in();
         TextUI ui = new TextUI(io);
         ui.run();
