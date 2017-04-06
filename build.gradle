@@ -12,14 +12,32 @@ apply plugin: 'application'
 
 jar {
 	manifest {
-		attributes 'Main-Class': 'Main'
+		attributes 'Main-Class': 'takarivi.bibtex.Main'
 	}
 }
 
-mainClassName = 'Main'
+mainClassName = 'takarivi.bibtex.Main'
 
 run {
 	standardInput = System.in
+}
+
+if (!hasProperty('mainClass')) {
+	ext.mainClass = 'takarivi.bibtex.Main'
+}
+
+void configureRun(def task) {
+    main = mainClass
+    task.systemProperty "java.library.path", "./lib/native/"
+}
+
+task(debug, dependsOn: 'classes', type: JavaExec)
+{
+	main = project.mainClassName
+	classpath = sourceSets.main.runtimeClasspath
+	standardInput = System.in
+	ignoreExitValue = true
+	debug true
 }
 /*
 
