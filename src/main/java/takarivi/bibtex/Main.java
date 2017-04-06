@@ -7,34 +7,17 @@ import takarivi.bibtex.enums.FieldType;
 import takarivi.bibtex.model.Article;
 import takarivi.bibtex.model.Entry;
 import takarivi.bibtex.model.Field;
+import takarivi.bibtex.view.IO;
+import takarivi.bibtex.view.IOSystem_in;
+import takarivi.bibtex.view.TextUI;
 
 public class Main {
     
     public static void main(String[] args) {
-        List<Entry> entries = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
+        TextUI
+        IO io = new IOSystem_in();
+        TextUI ui = new TextUI(io);
+        ui.run();
 
-        while (true) {
-            Entry e = new Article();
-            System.out.println("Required fields:\n");
-            for (FieldType ft : e.getRequired()) {
-                System.out.print(ft + ": ");
-                String s = sc.nextLine();
-                Field f = new Field(ft, s, 0);
-                e.addField(f);
-            }
-            System.out.println("\nOptional fields:\n");
-            for (FieldType ft : e.getOptional()) {
-                System.out.print(ft + ": ");
-                String s = sc.nextLine();
-                Field f = new Field(ft, s, 0);
-                e.addField(f);
-            }
-            System.out.println("");
-            for (Field f : e.getFields()) {
-                System.out.println(f);
-            }
-            entries.add(e);
         }
     }
-}

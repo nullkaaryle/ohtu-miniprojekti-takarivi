@@ -18,7 +18,8 @@ public class IOSystem_in implements IO {
 
     @Override
     public String readIn() {
-        String teksti = this.lukija.nextLine();
+       String teksti = this.lukija.nextLine();
+        
         return teksti;
     }
     
