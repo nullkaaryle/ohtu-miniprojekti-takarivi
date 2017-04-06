@@ -1,14 +1,15 @@
 
 package takarivi.bibtex.view;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
-public class IOSystem_in implements IO {
+public class IOStub implements IO {
     
-    private Scanner lukija;
+    private ArrayList<String> list;
     
-    public IOSystem_in() {
-        this.lukija = new Scanner(System.in);
+    public IOStub(ArrayList list) {
+        this.list = list;
     }
 
     @Override
@@ -18,8 +19,7 @@ public class IOSystem_in implements IO {
 
     @Override
     public String readIn() {
-        String teksti = this.lukija.nextLine();
-        return teksti;
+        return list.toString();
     }
     
     
