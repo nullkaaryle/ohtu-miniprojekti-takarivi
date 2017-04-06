@@ -5,35 +5,46 @@
  */
 package takarivi.bibtex.model;
 
+import takarivi.bibtex.enums.FieldType;
+
 /**
  *
  * @author pyykkomi
  */
 public class Field implements Comparable<Field> {
-    private FieldType field;
-    private ContentType content;
+    private FieldType fieldType;
+    private ContentType contentType;
+    private String content;
     private int index;
     
-    public Field(FieldType field, ContentType content, int index) {
-        this.field = field;
+    public Field(FieldType fieldType, String content, int index) {
+        this.fieldType = fieldType;
         this.content = content;
         this.index = index;
     }
 
-    public FieldType getField() {
-        return field;
-    }
-
-    public void setField(FieldType field) {
-        this.field = field;
-    }
-
-    public ContentType getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(ContentType content) {
+    public void setContent(String content) {
         this.content = content;
+    }
+
+    public FieldType getFieldType() {
+        return fieldType;
+    }
+
+    public void setFieldType(FieldType fieldType) {
+        this.fieldType = fieldType;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public int getIndex() {
@@ -46,6 +57,9 @@ public class Field implements Comparable<Field> {
 
     @Override
     public int compareTo(Field o) {
+        if (o.index == index) {
+            return fieldType.compareTo(o.fieldType);
+        }
         return o.index - index;
     }
     

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package takarivi.bibtex.model;
+package takarivi.bibtex.enums;
 
 /**
  *
  * @author pyykkomi
  */
-public class FieldType {
-    
+public enum FieldType {
+    AUTHOR, TITLE, JOURNAL, YEAR, VOLUME, NUMBER, PAGES, MONTH, NOTE, KEY;
 }
