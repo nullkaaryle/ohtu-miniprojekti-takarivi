@@ -5,6 +5,7 @@
  */
 package takarivi.bibtex.model;
 
+import takarivi.bibtex.enums.ContentType;
 import takarivi.bibtex.enums.FieldType;
 
 /**
@@ -61,6 +62,11 @@ public class Field implements Comparable<Field> {
             return fieldType.compareTo(o.fieldType);
         }
         return o.index - index;
+    }
+    
+    @Override
+    public String toString() {
+        return fieldType + ": " + content; 
     }
     
     
