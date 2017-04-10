@@ -3,7 +3,9 @@ package takarivi.bibtex.view;
 import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.util.List;
+import takarivi.bibtex.controller.BibTexFormatter;
 import takarivi.bibtex.controller.EntryHandler;
+import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 import takarivi.bibtex.model.Article;
 import takarivi.bibtex.model.Entry;
@@ -13,9 +15,11 @@ public class TextUI {
 
     private IO io;
     private Entry entry;
+    private BibTexFormatter f;
 
     public TextUI(IO io) {
         this.io = io;
+        f = new BibTexFormatter();
     }
 
     public void consolePrintln(String string) {
@@ -31,7 +35,7 @@ public class TextUI {
         EntryHandler entryHandler = new EntryHandler();
 
         while (true) {
-            consolePrintln("Command (add, list, quit): ");
+            consolePrintln("Command (add, list, quit, write): ");
             String cmd = io.readIn();
             if (cmd.equals("add")) {
 
@@ -65,6 +69,9 @@ public class TextUI {
             }
             if (cmd.equals("quit")) {
                 return;
+            }
+            if (cmd.equals("write")) {
+                f.export(entryHandler.getEntries().get(0), EntryType.ARTICLE);
             }
         }
 
