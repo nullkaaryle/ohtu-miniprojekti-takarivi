@@ -29,23 +29,20 @@ public class TextUI {
         EntryHandler entryHandler = new EntryHandler();
 
         while (true) {
-            consolePrintln("Command (add, list, quit): ");
-            String cmd = io.readIn();
+            String cmd = io.readIn("Command (add, list, quit): ");
             if (cmd.equals("add")) {
 
                 Entry entry = new Article();
                 consolePrintln("\nRequired fields:");
                 for (FieldType ft : entry.getRequired()) {
-                    consolePrint("Please enter " + ft + ": ");
-                    String input = io.readIn();
+                    String input = io.readIn("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 
                 consolePrintln("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
-                    consolePrint("Please enter " + ft + ": ");
-                    String input = io.readIn();
+                    String input = io.readIn("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 

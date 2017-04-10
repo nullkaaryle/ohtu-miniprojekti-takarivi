@@ -2,7 +2,6 @@
 package takarivi.bibtex.view;
 
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.List;
 
 public class IOStub implements IO {
@@ -30,7 +29,8 @@ public class IOStub implements IO {
     }
     
     @Override
-    public String readIn() {
+    public String readIn(String line) {
+        print(line);
         if (idx < lines.size()) {
             return lines.get(idx++);
         }
