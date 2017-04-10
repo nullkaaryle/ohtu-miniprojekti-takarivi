@@ -1,7 +1,5 @@
 package takarivi.bibtex.view;
 
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.List;
 import takarivi.bibtex.controller.BibTexFormatter;
 import takarivi.bibtex.controller.EntryHandler;
@@ -35,23 +33,23 @@ public class TextUI {
         EntryHandler entryHandler = new EntryHandler();
 
         while (true) {
+
             consolePrintln("Command (add, list, quit, write): ");
             String cmd = io.readIn();
+
             if (cmd.equals("add")) {
 
                 Entry entry = new Article();
                 consolePrintln("\nRequired fields:");
                 for (FieldType ft : entry.getRequired()) {
-                    consolePrint("Please enter " + ft + ": ");
-                    String input = io.readIn();
+                    String input = io.readIn("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 
                 consolePrintln("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
-                    consolePrint("Please enter " + ft + ": ");
-                    String input = io.readIn();
+                    String input = io.readIn("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 

@@ -2,14 +2,21 @@
 package takarivi.bibtex.view;
 
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.List;
 
 public class IOStub implements IO {
     
-    private ArrayList<String> list;
+    private List<String> lines;
+    private List<String> prints;
+    private int idx;
     
-    public IOStub(ArrayList list) {
-        this.list = list;
+    public IOStub(List<String> values) {
+        this.lines = values;
+        prints = new ArrayList<>();
+    }
+
+    public void print(String string) {
+        prints.add(string);
     }
 
     @Override
@@ -17,9 +24,18 @@ public class IOStub implements IO {
         System.out.println(toPrint);
     }
 
+    public List<String> getPrints() {
+        return prints;
+    }
+    
     @Override
-    public String readIn() {
-        return list.toString();
+    public String readIn(String line) {
+        print(line);
+        if (idx < lines.size()) {
+            return lines.get(idx++);
+        }
+        
+        return "";
     }
     
     

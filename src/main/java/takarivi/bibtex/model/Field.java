@@ -15,20 +15,20 @@ import takarivi.bibtex.enums.FieldType;
 public class Field implements Comparable<Field> {
     private FieldType fieldType;
     private ContentType contentType;
-    private String content;
+    private Object content;
     private int index;
     
-    public Field(FieldType fieldType, String content, int index) {
+    public Field(FieldType fieldType, Object content, int index) {
         this.fieldType = fieldType;
         this.content = content;
         this.index = index;
     }
 
-    public String getContent() {
-        return content;
+    public <T> T getContent() {
+        return (T) content;
     }
 
-    public void setContent(String content) {
+    public void setContent(Object content) {
         this.content = content;
     }
 
