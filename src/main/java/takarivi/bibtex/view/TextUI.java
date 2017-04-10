@@ -1,7 +1,5 @@
 package takarivi.bibtex.view;
 
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.List;
 import takarivi.bibtex.controller.EntryHandler;
 import takarivi.bibtex.enums.FieldType;
