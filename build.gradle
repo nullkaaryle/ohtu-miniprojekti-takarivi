@@ -16,6 +16,11 @@ jar {
 	}
 }
 
+repositories {
+	jcenter()
+	mavenCentral()
+}
+
 mainClassName = 'takarivi.bibtex.Main'
 
 run {
@@ -28,12 +33,12 @@ if (!hasProperty('mainClass')) {
 
 project.ext {
     cucumberVersion = '1.2.5'
-    testCompile 'info.cukes:cucumber-java:' + cucumberVersion
-    testCompile 'info.cukes:cucumber-junit:' + cucumberVersion
 }
 
 dependencies {
     testCompile 'junit:junit:4.12'    
+    testCompile 'info.cukes:cucumber-java:1.2.5'
+    testCompile 'info.cukes:cucumber-junit:1.2.5'   
 }
 
 //void configureRun(def task) {
