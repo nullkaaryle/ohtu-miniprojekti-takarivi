@@ -34,8 +34,7 @@ public class TextUI {
 
         while (true) {
 
-            consolePrintln("Command (add, list, quit, write): ");
-            String cmd = io.readIn();
+            String cmd = io.readIn("Command (add, list, quit, write): ");
 
             if (cmd.equals("add")) {
 

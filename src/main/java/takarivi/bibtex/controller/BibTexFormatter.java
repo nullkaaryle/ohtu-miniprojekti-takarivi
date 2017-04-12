@@ -52,7 +52,7 @@ public class BibTexFormatter implements Formatter {
         builder.append("{ ");
         for (Field field : fields) {
             if (field.getFieldType() == FieldType.KEY) {
-                builder.append(field.getContent());
+                builder.append((String) field.getContent());
                 builder.append(", \n");
             }
         }
@@ -62,7 +62,7 @@ public class BibTexFormatter implements Formatter {
             if (field.getFieldType() != FieldType.KEY) {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
-                builder.append(field.getContent());
+                builder.append((String) field.getContent());
                 if (iterator.hasNext()) {
                     builder.append("\", \n");
                 } else {
