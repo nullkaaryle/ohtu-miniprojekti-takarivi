@@ -51,6 +51,7 @@ public class BibTexFormatter implements Formatter {
         builder.append(entry.getBibTexKey());
         builder.append(", \n");
 
+
         Iterator iterator = fields.iterator();
         while (iterator.hasNext()) {
             Field field = (Field) iterator.next();
@@ -64,6 +65,7 @@ public class BibTexFormatter implements Formatter {
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
                 builder.append("\", \n");
+
 
             }
         }

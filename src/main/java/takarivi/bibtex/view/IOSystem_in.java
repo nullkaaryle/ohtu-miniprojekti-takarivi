@@ -7,8 +7,8 @@ public class IOSystem_in implements IO {
     
     private Scanner lukija;
     
-    public IOSystem_in() {
-        this.lukija = new Scanner(System.in);
+    public IOSystem_in(Scanner lukija) {
+        this.lukija = lukija;
     }
 
     @Override

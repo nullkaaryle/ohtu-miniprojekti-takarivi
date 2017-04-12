@@ -34,15 +34,21 @@ public class TextUI {
 
         while (true) {
 
-            consolePrintln("Command (add, list, quit, write): ");
-            String cmd = io.readIn();
+            String cmd = io.readIn("Command (add, list, quit, write): ");
 
             if (cmd.equals("add")) {
 
                 Entry entry = new Article();
                 consolePrintln("\nRequired fields:");
                 for (FieldType ft : entry.getRequired()) {
-                    String input = io.readIn("Please enter " + ft + ": ");
+                    String input = "";
+                    while (input.equals("")) {
+                        input = io.readIn("Please enter " + ft + ": ");
+                        if (input.equals("")) {
+                            io.printOut(ft + " is required!");
+                        }
+                    }
+                    
                     entry.addField(new Field(ft, input, 0));
                 }
 
