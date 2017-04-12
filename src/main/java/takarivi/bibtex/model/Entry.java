@@ -5,8 +5,10 @@
  */
 package takarivi.bibtex.model;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
+import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 
 /**
@@ -14,11 +16,16 @@ import takarivi.bibtex.enums.FieldType;
  * @author pyykkomi
  */
 public class Entry {
+    private EntryType entryType;
+    private String bibtexKey;
     private Set<Field> fields;
     private Set<FieldType> required, optional;
     
-    public Entry() {
+    public Entry(EntryType entryType) {
+        this.entryType = entryType;
         this.fields = new TreeSet<>();
+        this.required = new TreeSet<>();
+        this.optional = new TreeSet<>();
     }
 
     public Set<Field> getFields() {
@@ -43,15 +50,8 @@ public class Entry {
     }
     
     public void addFieldTypes(FieldType[] required, FieldType[] optional) {
-        this.required = new TreeSet<FieldType>();
-        this.optional = new TreeSet<FieldType>();
-        
-        for (FieldType f : required) {
-            this.required.add(f);
-        }
-        for (FieldType f : optional) {
-            this.optional.add(f);
-        }
+        this.required.addAll(Arrays.asList(required));
+        this.optional.addAll(Arrays.asList(optional));
     }
 
     public Set<FieldType> getRequired() {
@@ -68,6 +68,22 @@ public class Entry {
 
     public void setOptional(Set<FieldType> optional) {
         this.optional = optional;
+    }
+
+    public EntryType getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(EntryType entryType) {
+        this.entryType = entryType;
+    }
+
+    public String getBibtexKey() {
+        return bibtexKey;
+    }
+
+    public void setBibtexKey(String bibtexKey) {
+        this.bibtexKey = bibtexKey;
     }
     
     
