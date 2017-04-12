@@ -15,8 +15,8 @@ public class Entry {
     public Entry(EntryType entryType) {
         this.entryType = entryType;
         this.fields = new TreeSet<>();
-        this.required = new TreeSet<>();
-        this.optional = new TreeSet<>();
+        this.required = new TreeSet<>(entryType.getRequired());
+        this.optional = new TreeSet<>(entryType.getOptional());
     }
 
     public Set<Field> getFields() {
