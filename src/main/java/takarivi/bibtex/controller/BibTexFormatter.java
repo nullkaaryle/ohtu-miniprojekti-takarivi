@@ -48,7 +48,7 @@ public class BibTexFormatter implements Formatter {
         builder.append("@");
         builder.append(entrytype.toString());
         builder.append("{");
-        builder.append(entry.getBibtexKey());
+        builder.append(entry.getBibTexKey());
         builder.append(", \n");
 
 

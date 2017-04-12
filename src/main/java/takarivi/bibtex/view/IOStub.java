@@ -16,13 +16,15 @@ public class IOStub implements IO {
         prints = new ArrayList<>();
     }
 
-    public void print(String string) {
-        prints.add(string);
-    }
-
     @Override
-    public void printOut(String toPrint) {
-        System.out.println(toPrint);
+    public void print(String toPrint) {
+        prints.add(toPrint);
+        System.out.print(toPrint);
+    }
+    
+    @Override
+    public void printLn(String toPrint) {
+        print(toPrint + "\n");
     }
 
     public List<String> getPrints() {
@@ -38,6 +40,7 @@ public class IOStub implements IO {
         
         return "";
     }
+
     
     
     
