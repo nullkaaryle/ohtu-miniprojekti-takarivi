@@ -17,7 +17,7 @@ import takarivi.bibtex.enums.FieldType;
  */
 public class Entry {
     private EntryType entryType;
-    private String bibtexKey;
+    private String bibTexKey;
     private Set<Field> fields;
     private Set<FieldType> required, optional;
     
@@ -78,12 +78,12 @@ public class Entry {
         this.entryType = entryType;
     }
 
-    public String getBibtexKey() {
-        return bibtexKey;
+    public String getBibTexKey() {
+        return bibTexKey;
     }
 
     public void setBibtexKey(String bibtexKey) {
-        this.bibtexKey = bibtexKey;
+        this.bibTexKey = bibtexKey;
     }
     
     
