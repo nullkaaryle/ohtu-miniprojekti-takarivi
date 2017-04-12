@@ -41,6 +41,10 @@ dependencies {
     testCompile 'info.cukes:cucumber-junit:1.2.5'   
 }
 
+test {
+	testLogging.showStandardStreams = true
+}
+
 //void configureRun(def task) {
 //    main = mainClass
 //    task.systemProperty "java.library.path", "./lib/native/"
