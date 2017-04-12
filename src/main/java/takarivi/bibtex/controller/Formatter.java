@@ -5,10 +5,16 @@
  */
 package takarivi.bibtex.controller;
 
+import takarivi.bibtex.enums.EntryType;
+import takarivi.bibtex.model.Entry;
+
 /**
  *
  * @author pyykkomi
  */
-public class Formatter {
+public interface Formatter {
+    
+    public void export(Entry entry, EntryType entrytype);
+    
     
 }
