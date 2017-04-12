@@ -22,14 +22,13 @@ import takarivi.bibtex.view.TextUI;
  */
 public class StepDefs {
 
-    private IOStub io;
     private TextUI ui;
     
     private List<String> inputLines = new ArrayList<>();
+    private IOStub io = new IOStub(inputLines);
     
     @Before
     public void setUp() {
-        io = new IOStub(inputLines);
         ui = new TextUI(io);
         ui.run();
     }
@@ -59,6 +58,12 @@ public class StepDefs {
     }
     
     private void outputContains(String line) {
-        assertTrue(io.getPrints().contains(line));
+        boolean found = false;
+        for (String s : io.getPrints()) {
+            if (s.contains(line)) {
+                found = true;
+            }
+        }
+        assertTrue(found);
     }
 }

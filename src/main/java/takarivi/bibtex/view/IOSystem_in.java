@@ -12,8 +12,8 @@ public class IOSystem_in implements IO {
     }
 
     @Override
-    public void printOut(String toPrint) {
-        System.out.println(toPrint);
+    public void print(String toPrint) {
+        System.out.print(toPrint);
         System.out.flush();
     }
 
@@ -24,6 +24,11 @@ public class IOSystem_in implements IO {
         String teksti = this.lukija.nextLine();
         
         return teksti;
+    }
+
+    @Override
+    public void printLn(String toPrint) {
+        print(toPrint + "\n");
     }
     
     

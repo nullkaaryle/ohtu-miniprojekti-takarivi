@@ -20,13 +20,15 @@ public class TextUI {
         f = new BibTexFormatter();
     }
 
-    public void consolePrintln(String string) {
-        consolePrint(string + "\n");
-    }
-    
-    public void consolePrint(String string) {
-        System.out.print(string);
-        System.out.flush();
+    public String getInputErrorCheck(String field) {
+        String input = "";
+        while (input.equals("")) {
+            input = io.readIn("Please enter " + field + ": ");
+            if (input.equals("")) {
+                io.print(field + " is required!\n");
+            }
+        }
+        return input;
     }
     
     public void run() {
@@ -39,20 +41,14 @@ public class TextUI {
             if (cmd.equals("add")) {
 
                 Entry entry = new Article();
-                consolePrintln("\nRequired fields:");
+                io.printLn("\nRequired fields:");
+                entry.setBibTexKey(getInputErrorCheck("Please enter BibTexKey: "));
                 for (FieldType ft : entry.getRequired()) {
-                    String input = "";
-                    while (input.equals("")) {
-                        input = io.readIn("Please enter " + ft + ": ");
-                        if (input.equals("")) {
-                            io.printOut(ft + " is required!");
-                        }
-                    }
-                    
+                    String input = getInputErrorCheck("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 
-                consolePrintln("\nOptional fields:");
+                io.printLn("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
                     String input = io.readIn("Please enter " + ft + ": ");
@@ -66,9 +62,9 @@ public class TextUI {
 
                 for (Entry e : entries) {
                     for (Field f : e.getFields()) {
-                        consolePrintln(f.toString());
+                        io.printLn(f.toString());
                     }
-                    consolePrintln("");
+                    io.printLn("");
                 }
             }
             if (cmd.equals("quit")) {

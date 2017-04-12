@@ -2,7 +2,8 @@ Feature: As a user I want to add an article
 
     Scenario: user can add an article with correct required fields
         Given add article is selected
-        When "author" is given
+        When "au12" is given
+        And "author" is given
         And "title" is given
         And "journal" is given
         And "2012" is given
@@ -21,7 +22,8 @@ Feature: As a user I want to add an article
         
     Scenario: user cannot add invalid values to required fields
         Given add article is selected
-        When "author" is given
+        When "aa11" is given
+        And "author" is given
         And "title" is given
         And "journal" is given
         And "invalidvalue" is given
