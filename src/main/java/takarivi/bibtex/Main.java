@@ -1,17 +1,15 @@
 package takarivi.bibtex;
 
-import java.util.ArrayList;
-import takarivi.bibtex.view.IOStub;
+import java.util.Scanner;
+import takarivi.bibtex.view.IO;
+import takarivi.bibtex.view.IOSystem_in;
 import takarivi.bibtex.view.TextUI;
 
 public class Main {
 
     public static void main(String[] args) {
-//        IO io = new IOSystem_in(new Scanner(System.in));
-        IOStub io = new IOStub(new ArrayList<>());
+        IO io = new IOSystem_in(new Scanner(System.in));
         TextUI ui = new TextUI(io);
-        io.addLine("add");
-        io.addLine("asdf");
         ui.run();
 
     }
