@@ -5,7 +5,6 @@ import takarivi.bibtex.controller.BibTexFormatter;
 import takarivi.bibtex.controller.EntryHandler;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
-import takarivi.bibtex.model.Article;
 import takarivi.bibtex.model.Entry;
 import takarivi.bibtex.model.Field;
 
