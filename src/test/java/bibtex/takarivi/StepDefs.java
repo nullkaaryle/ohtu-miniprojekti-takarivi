@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bibtex.takarivi;
 
 import cucumber.api.java.en.Given;
@@ -16,48 +11,49 @@ import org.junit.Before;
 import takarivi.bibtex.view.IOStub;
 import takarivi.bibtex.view.TextUI;
 
-/**
- *
- * @author pyykkomi
- */
 public class StepDefs {
 
     private IOStub io;
     private TextUI ui;
-    
     private List<String> inputLines = new ArrayList<>();
-    
+
+//BEFORE    
     @Before
     public void setUp() {
         io = new IOStub(inputLines);
         ui = new TextUI(io);
         ui.run();
     }
-    
-    @After
-    public void tearDown() {
-    }
 
+//GIVEN
     @Given("^add article is selected$")
     public void add_article_is_selected() throws Throwable {
         inputLines.add("add");
     }
 
+//WHEN
     @When("^\"([^\"]*)\" is given$")
     public void is_given(String input) throws Throwable {
         inputLines.add(input);
     }
 
+//THEN
     @Then("^article is added$")
     public void article_is_added() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        //TextUi:n EntryHandlerin listaan on lisätty article-entry
     }
 
     @Then("^error message is shown$")
     public void error_message_is_shown() throws Throwable {
         outputContains("is required!");
     }
-    
+
+//AFTER
+    @After
+    public void tearDown() {
+    }
+
+//HELPER METHODS
     private void outputContains(String line) {
         assertTrue(io.getPrints().contains(line));
     }

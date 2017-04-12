@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package takarivi.bibtex.model;
 
 import java.util.Set;
 import java.util.TreeSet;
 import takarivi.bibtex.enums.FieldType;
 
-/**
- *
- * @author pyykkomi
- */
 public class Entry {
     private Set<Field> fields;
     private Set<FieldType> required, optional;
