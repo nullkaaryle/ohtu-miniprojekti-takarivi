@@ -73,8 +73,8 @@ public class Entry {
         return bibTexKey;
     }
 
-    public void setBibtexKey(String bibtexKey) {
-        this.bibTexKey = bibtexKey;
+    public void setBibTexKey(String bibTexKey) {
+        this.bibTexKey = bibTexKey;
     }
     
     
