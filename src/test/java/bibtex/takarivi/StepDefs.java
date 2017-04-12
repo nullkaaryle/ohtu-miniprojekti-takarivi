@@ -5,13 +5,13 @@
  */
 package bibtex.takarivi;
 
-import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import takarivi.bibtex.view.IOStub;
 import takarivi.bibtex.view.TextUI;
@@ -31,6 +31,7 @@ public class StepDefs {
     public void setUp() {
         io = new IOStub(inputLines);
         ui = new TextUI(io);
+        ui.run();
     }
     
     @After
@@ -40,13 +41,11 @@ public class StepDefs {
     @Given("^add article is selected$")
     public void add_article_is_selected() throws Throwable {
         inputLines.add("add");
-        ui.run();
     }
 
     @When("^\"([^\"]*)\" is given$")
     public void is_given(String input) throws Throwable {
         inputLines.add(input);
-        ui.run();
     }
 
     @Then("^article is added$")
@@ -56,6 +55,10 @@ public class StepDefs {
 
     @Then("^error message is shown$")
     public void error_message_is_shown() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
+        outputContains("is required!");
+    }
+    
+    private void outputContains(String line) {
+        assertTrue(io.getPrints().contains(line));
     }
 }

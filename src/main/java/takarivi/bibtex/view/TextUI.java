@@ -35,7 +35,14 @@ public class TextUI {
                 Entry entry = new Article();
                 consolePrintln("\nRequired fields:");
                 for (FieldType ft : entry.getRequired()) {
-                    String input = io.readIn("Please enter " + ft + ": ");
+                    String input = "";
+                    while (input.equals("")) {
+                        input = io.readIn("Please enter " + ft + ": ");
+                        if (input.equals("")) {
+                            io.printOut(ft + " is required!");
+                        }
+                    }
+                    
                     entry.addField(new Field(ft, input, 0));
                 }
 

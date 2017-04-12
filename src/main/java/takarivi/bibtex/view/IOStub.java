@@ -3,6 +3,7 @@ package takarivi.bibtex.view;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class IOStub implements IO {
     
