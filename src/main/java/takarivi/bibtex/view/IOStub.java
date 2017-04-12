@@ -42,7 +42,7 @@ public class IOStub implements IO {
             return lines.get(idx++);
         }
         
-        return "";
+        return "\u0003";
     }
 
     

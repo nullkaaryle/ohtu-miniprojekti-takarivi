@@ -1,0 +1,11 @@
+@article{asdf, 
+Author = "ee", 
+Journal = "fef", 
+Key = "", 
+Month = "", 
+Note = "", 
+Number = "", 
+Pages = "", 
+Title = "ef", 
+Volume = "ef", 
+Year = "ef" }

@@ -12,12 +12,13 @@ import takarivi.bibtex.model.Field;
 public class TextUI {
 
     private IO io;
-    private Entry entry;
+    private EntryHandler entryHandler;
     private BibTexFormatter f;
 
     public TextUI(IO io) {
         this.io = io;
         f = new BibTexFormatter();
+        entryHandler = new EntryHandler();
     }
 
     public String getInputErrorCheck(String field) {
@@ -30,28 +31,46 @@ public class TextUI {
         }
         return input;
     }
+
+    public EntryHandler getEntryHandler() {
+        return entryHandler;
+    }
     
     public void run() {
-        EntryHandler entryHandler = new EntryHandler();
-
+        
+        String input = "";
+        
         while (true) {
 
             String cmd = io.readIn("Command (add, list, quit, write): ");
 
             if (cmd.equals("add")) {
 
-                Entry entry = new Article();
+                io.printLn("Content types available: ");
+                for (EntryType et : EntryType.values()) {
+                    io.printLn(et.toString());
+                }
+                EntryType type = null;
+                while (type == null) {
+                    input = io.readIn("Content type: ");
+                    for (EntryType et : EntryType.values()) {
+                        if (input.toLowerCase().equals(et.toString().toLowerCase())) {
+                            type = et;
+                        }
+                    }
+                }
+                Entry entry = new Entry(type);
                 io.printLn("\nRequired fields:");
                 entry.setBibTexKey(getInputErrorCheck("BibTexKey"));
                 for (FieldType ft : entry.getRequired()) {
-                    String input = getInputErrorCheck(ft.toString());
+                    input = getInputErrorCheck(ft.toString());
                     entry.addField(new Field(ft, input, 0));
                 }
 
                 io.printLn("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
-                    String input = io.readIn("Please enter " + ft + ": ");
+                    input = io.readIn("Please enter " + ft + ": ");
                     entry.addField(new Field(ft, input, 0));
                 }
 
