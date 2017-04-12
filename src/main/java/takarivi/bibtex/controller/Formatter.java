@@ -5,6 +5,7 @@
  */
 package takarivi.bibtex.controller;
 
+import java.util.List;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.model.Entry;
 
@@ -14,7 +15,7 @@ import takarivi.bibtex.model.Entry;
  */
 public interface Formatter {
     
-    public void export(Entry entry, EntryType entrytype);
+    public void export(List<Entry> entries, EntryType entrytype);
     
     
 }

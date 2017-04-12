@@ -8,6 +8,7 @@ package takarivi.bibtex.controller;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
@@ -24,7 +25,7 @@ public class BibTexFormatter implements Formatter {
     private FileWriter writer;
 
     public BibTexFormatter() {
-        file = new File("tiedosto.txt");
+        file = new File("bibtex.txt");
         try {
             writer = new FileWriter(file);
         } catch (Exception e) {
@@ -32,14 +33,19 @@ public class BibTexFormatter implements Formatter {
     }
 
     @Override
-    public void export(Entry entry, EntryType entrytype) {
-        CharSequence bibtex = buildString(entry, entrytype);
+    public void export(List<Entry> entries, EntryType entrytype) {
+        for (Entry entry : entries) {
+            CharSequence bibtex = buildString(entry, entrytype);
+            try {
+                writer.append(bibtex);
+
+            } catch (Exception e) {
+            }
+        }
         try {
-            writer.append(bibtex);
             writer.close();
         } catch (Exception e) {
         }
-
     }
 
     public String buildString(Entry entry, EntryType entrytype) {
@@ -51,7 +57,6 @@ public class BibTexFormatter implements Formatter {
         builder.append(entry.getBibTexKey());
         builder.append(", \n");
 
-
         Iterator iterator = fields.iterator();
         while (iterator.hasNext()) {
             Field field = (Field) iterator.next();
@@ -60,12 +65,12 @@ public class BibTexFormatter implements Formatter {
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
                 builder.append("\" }");
+                builder.append("\n\n");
             } else {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
                 builder.append("\", \n");
-
 
             }
         }

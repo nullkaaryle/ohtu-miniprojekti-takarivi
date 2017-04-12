@@ -71,7 +71,7 @@ public class TextUI {
                 return;
             }
             if (cmd.equals("write")) {
-                f.export(entryHandler.getEntries().get(0), EntryType.ARTICLE);
+                f.export(entryHandler.getEntries(), EntryType.ARTICLE);
             }
         }
 
