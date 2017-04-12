@@ -59,7 +59,7 @@ public class BibTexFormatter implements Formatter {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
-                builder.append(builder.append("\" }"));
+                builder.append("\" }");
             } else {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
