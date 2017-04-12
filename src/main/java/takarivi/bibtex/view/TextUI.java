@@ -71,8 +71,11 @@ public class TextUI {
                 return;
             }
             if (cmd.equals("write")) {
-                f.export(entryHandler.getEntries(), EntryType.ARTICLE);
+                String filename = io.readIn("Enter file name: ");
+                f.export(entryHandler.getEntries(), EntryType.ARTICLE, filename);
+                
             }
+
         }
 
     }

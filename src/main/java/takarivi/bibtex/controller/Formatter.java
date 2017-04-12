@@ -15,7 +15,7 @@ import takarivi.bibtex.model.Entry;
  */
 public interface Formatter {
     
-    public void export(List<Entry> entries, EntryType entrytype);
+    public void export(List<Entry> entries, EntryType entrytype, String filename);
     
     
 }

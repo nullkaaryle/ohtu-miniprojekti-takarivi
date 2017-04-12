@@ -21,19 +21,19 @@ import takarivi.bibtex.model.Field;
  */
 public class BibTexFormatter implements Formatter {
 
-    private File file;
     private FileWriter writer;
 
     public BibTexFormatter() {
-        file = new File("bibtex.txt");
+
+    }
+
+    @Override
+    public void export(List<Entry> entries, EntryType entrytype, String filename) {
+        File file = new File(filename);
         try {
             writer = new FileWriter(file);
         } catch (Exception e) {
         }
-    }
-
-    @Override
-    public void export(List<Entry> entries, EntryType entrytype) {
         for (Entry entry : entries) {
             CharSequence bibtex = buildString(entry, entrytype);
             try {
@@ -64,7 +64,7 @@ public class BibTexFormatter implements Formatter {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
-                builder.append("\" }");
+                builder.append("\"}");
                 builder.append("\n\n");
             } else {
                 builder.append(field.getFieldType().toString());
