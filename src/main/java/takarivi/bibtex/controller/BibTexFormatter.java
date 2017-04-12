@@ -21,12 +21,10 @@ import takarivi.bibtex.model.Field;
 public class BibTexFormatter implements Formatter {
 
     private File file;
-    private StringBuilder builder;
     private FileWriter writer;
 
     public BibTexFormatter() {
         file = new File("tiedosto.txt");
-        builder = new StringBuilder();
         try {
             writer = new FileWriter(file);
         } catch (Exception e) {
@@ -41,35 +39,37 @@ public class BibTexFormatter implements Formatter {
             writer.close();
         } catch (Exception e) {
         }
-        
 
     }
 
     public String buildString(Entry entry, EntryType entrytype) {
+        StringBuilder builder = new StringBuilder();
         Set<Field> fields = entry.getFields();
         builder.append("@");
         builder.append(entrytype.toString());
-        builder.append("{ ");
-        for (Field field : fields) {
-            if (field.getFieldType() == FieldType.KEY) {
-                builder.append((String) field.getContent());
-                builder.append(", \n");
-            }
-        }
+        builder.append("{");
+        builder.append(entry.getBibtexKey());
+        builder.append(", \n");
+
+
         Iterator iterator = fields.iterator();
         while (iterator.hasNext()) {
             Field field = (Field) iterator.next();
-            if (field.getFieldType() != FieldType.KEY) {
+            if (!iterator.hasNext()) {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
-                if (iterator.hasNext()) {
-                    builder.append("\", \n");
-                } else {
-                    builder.append("\" }");
-                }
+                builder.append(builder.append("\" }"));
+            } else {
+                builder.append(field.getFieldType().toString());
+                builder.append(" = \"");
+                builder.append((String) field.getContent());
+                builder.append("\", \n");
+
+
             }
         }
+
         String bibtex = builder.toString();
         return bibtex;
     }
