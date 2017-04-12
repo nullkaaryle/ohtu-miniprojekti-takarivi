@@ -42,9 +42,9 @@ public class TextUI {
 
                 Entry entry = new Article();
                 io.printLn("\nRequired fields:");
-                entry.setBibTexKey(getInputErrorCheck("Please enter BibTexKey: "));
+                entry.setBibTexKey(getInputErrorCheck("BibTexKey"));
                 for (FieldType ft : entry.getRequired()) {
-                    String input = getInputErrorCheck("Please enter " + ft + ": ");
+                    String input = getInputErrorCheck(ft.toString());
                     entry.addField(new Field(ft, input, 0));
                 }
 

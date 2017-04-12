@@ -31,6 +31,10 @@ public class IOStub implements IO {
         return prints;
     }
     
+    public void addLine(String line) {
+        lines.add(line);
+    }
+    
     @Override
     public String readIn(String line) {
         print(line);
