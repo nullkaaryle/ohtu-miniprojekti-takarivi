@@ -60,8 +60,11 @@ public class Entry {
         fields.put(field.getFieldType(), null);
     }
     
-    public void addFieldTypes(FieldType[] required, FieldType[] optional) {
+    public void addRequiredFieldTypes(FieldType[] required) {
         this.required.addAll(Arrays.asList(required));
+    }
+    
+    public void addOptionalFieldTypes(FieldType[] optional) {
         this.optional.addAll(Arrays.asList(optional));
     }
 
@@ -130,20 +133,20 @@ public class Entry {
             if (year.length() > 2) {
                 sb.append(year.substring(year.length() - 2, year.length()));
             } else {
-                sb.append(year.substring(year.length() - 4, year.length()));
+                sb.append(year.substring(0, year.length()));
             }
         }
         
         return sb.toString();
     }
     
-    public boolean validate() {
-        for (FieldType req : required) {
-            if (!fields.containsKey(req) || fields.get(req) == null) {
-               return false; 
-            }
-        }
-        
-        return true;
-    }
+//    public boolean validate() {
+//        for (FieldType req : required) {
+//            if (!fields.containsKey(req) || fields.get(req) == null) {
+//               return false; 
+//            }
+//        }
+//        
+//        return true;
+//    }
 }
