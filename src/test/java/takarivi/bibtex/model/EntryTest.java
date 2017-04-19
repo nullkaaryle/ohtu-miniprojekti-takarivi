@@ -12,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import takarivi.bibtex.enums.EntryType;
+import takarivi.bibtex.enums.FieldType;
 
 
 public class EntryTest {
