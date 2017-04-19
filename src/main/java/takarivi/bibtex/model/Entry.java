@@ -1,7 +1,9 @@
 package takarivi.bibtex.model;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
@@ -9,35 +11,45 @@ import takarivi.bibtex.enums.FieldType;
 public class Entry {
     private EntryType entryType;
     private String bibTexKey;
-    private Set<Field> fields;
+    private Map<FieldType, Field> fields;
     private Set<FieldType> required, optional;
     
     public Entry(EntryType entryType) {
         this.entryType = entryType;
-        this.fields = new TreeSet<>();
+        this.fields = new TreeMap<>();
         this.required = new TreeSet<>(entryType.getRequired());
         this.optional = new TreeSet<>(entryType.getOptional());
+        for (FieldType req : required) {
+            fields.put(req, null);
+        }
+        for (FieldType opt : optional) {
+            fields.put(opt, null);
+        }
     }
 
-    public Set<Field> getFields() {
+    public Set<FieldType> getFieldTypes() {
+        return fields.keySet();
+    }
+    
+    public Map<FieldType, Field> getFields() {
         return fields;
     }
 
-    public void setFields(Set<Field> fields) {
+    public void setFields(Map<FieldType, Field> fields) {
         this.fields = fields;
     }
     
     public void addField(Field field) {
         if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType()))
         {
-            fields.add(field);
+            fields.put(field.getFieldType(), field);
         } else {
             // doom;
         }
     }
     
     public void removeField(Field field) {
-        fields.remove(field);
+        fields.remove(field.getFieldType());
     }
     
     public void addFieldTypes(FieldType[] required, FieldType[] optional) {
@@ -77,5 +89,13 @@ public class Entry {
         this.bibTexKey = bibTexKey;
     }
     
-    
+    public boolean validate() {
+        for (FieldType req : required) {
+            if (!fields.containsKey(req) || fields.get(req) == null) {
+               return false; 
+            }
+        }
+        
+        return true;
+    }
 }

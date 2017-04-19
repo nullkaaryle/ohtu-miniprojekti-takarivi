@@ -79,8 +79,8 @@ public class TextUI {
                 List<Entry> entries = entryHandler.getEntries();
 
                 for (Entry e : entries) {
-                    for (Field f : e.getFields()) {
-                        io.printLn(f.toString());
+                    for (FieldType ft : e.getFieldTypes()) {
+                        io.printLn(e.getFields().get(ft).toString());
                     }
                     io.printLn("");
                 }

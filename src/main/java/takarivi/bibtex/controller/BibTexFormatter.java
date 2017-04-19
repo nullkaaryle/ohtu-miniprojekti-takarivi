@@ -50,30 +50,25 @@ public class BibTexFormatter implements Formatter {
 
     public String buildString(Entry entry, EntryType entrytype) {
         StringBuilder builder = new StringBuilder();
-        Set<Field> fields = entry.getFields();
+        Set<FieldType> fields = entry.getFields().keySet();
         builder.append("@");
         builder.append(entrytype.toString());
         builder.append("{");
         builder.append(entry.getBibTexKey());
         builder.append(", \n");
 
-        Iterator iterator = fields.iterator();
+        Iterator<FieldType> iterator = fields.iterator();
         while (iterator.hasNext()) {
-            Field field = (Field) iterator.next();
-            if (!iterator.hasNext()) {
+            Field field = entry.getFields().get(iterator.next());
+            if (!field.getFieldType().toString().equals("")) {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
                 builder.append((String) field.getContent());
-                builder.append("\"}");
-                builder.append("\n\n");
-            } else {
-                builder.append(field.getFieldType().toString());
-                builder.append(" = \"");
-                builder.append((String) field.getContent());
-                builder.append("\", \n");
-
             }
+            builder.append("\"").append(iterator.hasNext() ? "," : "").append("\n");
         }
+        builder.append("}");
+        builder.append("\n\n");
 
         String bibtex = builder.toString();
         return bibtex;
