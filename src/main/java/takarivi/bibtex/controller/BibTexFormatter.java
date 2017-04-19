@@ -34,17 +34,10 @@ public class BibTexFormatter implements Formatter {
         File file = new File(filename);
         try {
             writer = new FileWriter(file);
-        } catch (Exception e) {
-        }
-        for (Entry entry : entries) {
-            CharSequence bibtex = buildString(entry, entrytype);
-            try {
+            for (Entry entry : entries) {
+                CharSequence bibtex = buildString(entry, entrytype);
                 writer.append(bibtex);
-
-            } catch (Exception e) {
             }
-        }
-        try {
             writer.close();
         } catch (Exception e) {
         }
@@ -75,5 +68,4 @@ public class BibTexFormatter implements Formatter {
         String bibtex = builder.toString();
         return bibtex;
     }
-
 }
