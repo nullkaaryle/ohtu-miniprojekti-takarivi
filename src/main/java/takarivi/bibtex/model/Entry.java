@@ -109,6 +109,34 @@ public class Entry {
         return tags.contains(tag);
     }
     
+    public String createBibTexKey() {
+        if (!getFields().containsKey(FieldType.AUTHOR)) {
+            return "";
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        String[] authors = ((String) getFields().get(FieldType.AUTHOR).getContent()).split(" and ");
+        if (authors.length <= 1) {
+            sb.append(authors[0].substring(0, 3).toUpperCase());
+        } else {
+            for (String author : authors) {
+                sb.append(author.toUpperCase().charAt(0));
+            }
+        }
+        
+        String year = (String) getFields().get(FieldType.YEAR).getContent();
+        if (!year.equals("")) {
+            if (year.length() > 2) {
+                sb.append(year.substring(year.length() - 2, year.length()));
+            } else {
+                sb.append(year.substring(year.length() - 4, year.length()));
+            }
+        }
+        
+        return sb.toString();
+    }
+    
     public boolean validate() {
         for (FieldType req : required) {
             if (!fields.containsKey(req) || fields.get(req) == null) {
