@@ -47,6 +47,10 @@ public class Entry {
         this.fields = fields;
     }
     
+    public Field getField(FieldType ft) {
+        return fields.get(ft);
+    }
+    
     public void addField(Field field) throws IllegalArgumentException {
         if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType()))
         {
@@ -116,7 +120,7 @@ public class Entry {
         
         StringBuilder sb = new StringBuilder();
         
-        String[] authors = ((String) getFields().get(FieldType.AUTHOR).getContent()).split(" and ");
+        String[] authors = ((String) getField(FieldType.AUTHOR).getContent()).split(" and ");
         if (authors.length <= 1) {
             sb.append(authors[0].substring(0, 3).toUpperCase());
         } else {
@@ -125,7 +129,7 @@ public class Entry {
             }
         }
         
-        String year = (String) getFields().get(FieldType.YEAR).getContent();
+        String year = (String) getField(FieldType.YEAR).getContent();
         if (!year.equals("")) {
             if (year.length() > 2) {
                 sb.append(year.substring(year.length() - 2, year.length()));
