@@ -47,12 +47,12 @@ public class Entry {
         this.fields = fields;
     }
     
-    public void addField(Field field) {
+    public void addField(Field field) throws IllegalArgumentException {
         if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType()))
         {
             fields.put(field.getFieldType(), field);
         } else {
-            // doom;
+            throw new IllegalArgumentException();
         }
     }
     
