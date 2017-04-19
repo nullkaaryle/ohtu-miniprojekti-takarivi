@@ -14,6 +14,7 @@ public class Entry {
     private String bibTexKey;
     private Map<FieldType, Field> fields;
     private Set<FieldType> required, optional;
+    private Set<Tag> tags;
     private final UUID id = UUID.randomUUID();
     
     public Entry(EntryType entryType) {
@@ -21,6 +22,7 @@ public class Entry {
         this.fields = new TreeMap<>();
         this.required = new TreeSet<>(entryType.getRequired());
         this.optional = new TreeSet<>(entryType.getOptional());
+        this.tags = new TreeSet<>();
         for (FieldType req : required) {
             fields.put(req, null);
         }
@@ -93,6 +95,18 @@ public class Entry {
 
     public void setBibTexKey(String bibTexKey) {
         this.bibTexKey = bibTexKey;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+    
+    public boolean containsTag(Tag tag) {
+        return tags.contains(tag);
     }
     
     public boolean validate() {
