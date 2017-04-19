@@ -49,7 +49,7 @@ public class Entry {
     }
     
     public void removeField(Field field) {
-        fields.remove(field.getFieldType());
+        fields.put(field.getFieldType(), null);
     }
     
     public void addFieldTypes(FieldType[] required, FieldType[] optional) {

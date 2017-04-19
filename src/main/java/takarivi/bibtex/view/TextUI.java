@@ -60,12 +60,12 @@ public class TextUI {
                 }
                 Entry entry = new Entry(type);
                 io.printLn("\nRequired fields:");
-                entry.setBibTexKey(getInputErrorCheck("BibTexKey"));
                 for (FieldType ft : entry.getRequired()) {
                     input = getInputErrorCheck(ft.toString());
                     entry.addField(new Field(ft, input, 0));
                 }
 
+                entry.setBibTexKey(getInputErrorCheck("BibTexKey"));
                 io.printLn("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
