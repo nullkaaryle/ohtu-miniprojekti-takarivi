@@ -16,6 +16,8 @@ import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 import takarivi.bibtex.model.Entry;
 import takarivi.bibtex.model.Field;
+import takarivi.bibtex.util.TextUtils;
+
 
 /**
  *
@@ -36,17 +38,10 @@ public class BibTexFormatter implements Formatter {
         file = new File(filename);
         try {
             writer = new FileWriter(file);
-        } catch (Exception e) {
-        }
-        for (Entry entry : entries) {
-            CharSequence bibtex = buildString(entry, entrytype);
-            try {
+            for (Entry entry : entries) {
+                CharSequence bibtex = buildString(entry, entrytype);
                 writer.append(bibtex);
-
-            } catch (Exception e) {
             }
-        }
-        try {
             writer.close();
         } catch (Exception e) {
         }
@@ -67,12 +62,13 @@ public class BibTexFormatter implements Formatter {
             if (field == null) {
                 break;
             }
-            if (!field.getFieldType().toString().equals("")) {
+          
+            if (!((String) field.getContent()).equals("")) {
                 builder.append(field.getFieldType().toString());
-                builder.append(" = \"");
-                builder.append((String) field.getContent());
+                builder.append(" = {");
+                builder.append(TextUtils.convertToSpecial((String) field.getContent()));
+                builder.append("}").append(iterator.hasNext() ? "," : "").append("\n");
             }
-            builder.append("\"").append(iterator.hasNext() ? "," : "").append("\n");
         }
         builder.append("}");
         builder.append("\n\n");

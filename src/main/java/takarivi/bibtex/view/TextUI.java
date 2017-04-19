@@ -20,12 +20,15 @@ public class TextUI {
         entryHandler = new EntryHandler();
     }
 
-    public String getInputErrorCheck(String field) {
+    public String getInputErrorCheck(String field, String def) {
         String input = "";
         while (input.equals("")) {
-            input = io.readIn("Please enter " + field + ": ");
-            if (input.equals("")) {
+            input = io.readIn("Please enter " + field + 
+                              (def.equals("") ? "" : " (default: " + def + ")") + ": ");
+            if (input.equals("") & def.equals("")) {
                 io.print(field + " is required!\n");
+            } else if (input.equals("") & !def.equals("")) {
+                input = def;
             }
         }
         return input;
@@ -60,12 +63,12 @@ public class TextUI {
                 }
                 Entry entry = new Entry(type);
                 io.printLn("\nRequired fields:");
-                entry.setBibTexKey(getInputErrorCheck("BibTexKey"));
                 for (FieldType ft : entry.getRequired()) {
-                    input = getInputErrorCheck(ft.toString());
+                    input = getInputErrorCheck(ft.toString(), "");
                     entry.addField(new Field(ft, input, 0));
                 }
 
+                entry.setBibTexKey(getInputErrorCheck("BibTexKey", entry.createBibTexKey()));
                 io.printLn("\nOptional fields:");
 
                 for (FieldType ft : entry.getOptional()) {
@@ -79,9 +82,11 @@ public class TextUI {
                 List<Entry> entries = entryHandler.getEntries();
 
                 for (Entry e : entries) {
+                    io.printLn("Type: " + e.getEntryType().toString());
                     for (FieldType ft : e.getFieldTypes()) {
                         io.printLn(e.getFields().get(ft).toString());
                     }
+                    io.printLn("BibTexKey: " + e.getBibTexKey());
                     io.printLn("");
                 }
             }
