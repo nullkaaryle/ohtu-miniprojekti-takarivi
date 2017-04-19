@@ -82,9 +82,11 @@ public class TextUI {
                 List<Entry> entries = entryHandler.getEntries();
 
                 for (Entry e : entries) {
+                    io.printLn("Type: " + e.getEntryType().toString());
                     for (FieldType ft : e.getFieldTypes()) {
                         io.printLn(e.getFields().get(ft).toString());
                     }
+                    io.printLn("BibTexKey: " + e.getBibTexKey());
                     io.printLn("");
                 }
             }

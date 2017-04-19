@@ -47,12 +47,16 @@ public class Entry {
         this.fields = fields;
     }
     
-    public void addField(Field field) {
+    public Field getField(FieldType ft) {
+        return fields.get(ft);
+    }
+    
+    public void addField(Field field) throws IllegalArgumentException {
         if (required.contains(field.getFieldType()) || optional.contains(field.getFieldType()))
         {
             fields.put(field.getFieldType(), field);
         } else {
-            // doom;
+            throw new IllegalArgumentException();
         }
     }
     
@@ -60,8 +64,11 @@ public class Entry {
         fields.put(field.getFieldType(), null);
     }
     
-    public void addFieldTypes(FieldType[] required, FieldType[] optional) {
+    public void addRequiredFieldTypes(FieldType[] required) {
         this.required.addAll(Arrays.asList(required));
+    }
+    
+    public void addOptionalFieldTypes(FieldType[] optional) {
         this.optional.addAll(Arrays.asList(optional));
     }
 
@@ -116,7 +123,7 @@ public class Entry {
         
         StringBuilder sb = new StringBuilder();
         
-        String[] authors = ((String) getFields().get(FieldType.AUTHOR).getContent()).split(" and ");
+        String[] authors = ((String) getField(FieldType.AUTHOR).getContent()).split(" and ");
         if (authors.length <= 1) {
             sb.append(authors[0].substring(0, 3).toUpperCase());
         } else {
@@ -125,7 +132,7 @@ public class Entry {
             }
         }
         
-        String year = (String) getFields().get(FieldType.YEAR).getContent();
+        String year = (String) getField(FieldType.YEAR).getContent();
         if (!year.equals("")) {
             if (year.length() > 2) {
                 sb.append(year.substring(Math.max(0, year.length() - 2), year.length()));
@@ -137,13 +144,13 @@ public class Entry {
         return sb.toString();
     }
     
-    public boolean validate() {
-        for (FieldType req : required) {
-            if (!fields.containsKey(req) || fields.get(req) == null) {
-               return false; 
-            }
-        }
-        
-        return true;
-    }
+//    public boolean validate() {
+//        for (FieldType req : required) {
+//            if (!fields.containsKey(req) || fields.get(req) == null) {
+//               return false; 
+//            }
+//        }
+//        
+//        return true;
+//    }
 }
