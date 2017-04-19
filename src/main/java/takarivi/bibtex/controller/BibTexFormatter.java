@@ -14,6 +14,8 @@ import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 import takarivi.bibtex.model.Entry;
 import takarivi.bibtex.model.Field;
+import takarivi.bibtex.util.TextUtils;
+
 
 /**
  *
@@ -63,9 +65,9 @@ public class BibTexFormatter implements Formatter {
             if (!((String) field.getContent()).equals("")) {
                 builder.append(field.getFieldType().toString());
                 builder.append(" = \"");
-                builder.append((String) field.getContent());
+                builder.append(TextUtils.convertToSpecial((String) field.getContent()));
+                builder.append("\"").append(iterator.hasNext() ? "," : "").append("\n");
             }
-            builder.append("\"").append(iterator.hasNext() ? "," : "").append("\n");
         }
         builder.append("}");
         builder.append("\n\n");

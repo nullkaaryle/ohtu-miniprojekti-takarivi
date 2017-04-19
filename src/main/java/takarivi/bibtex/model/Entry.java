@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
+import java.util.UUID;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 
@@ -13,6 +14,7 @@ public class Entry {
     private String bibTexKey;
     private Map<FieldType, Field> fields;
     private Set<FieldType> required, optional;
+    private final UUID id = UUID.randomUUID();
     
     public Entry(EntryType entryType) {
         this.entryType = entryType;
@@ -27,6 +29,10 @@ public class Entry {
         }
     }
 
+    public UUID getId() {
+        return id;
+    }
+    
     public Set<FieldType> getFieldTypes() {
         return fields.keySet();
     }
