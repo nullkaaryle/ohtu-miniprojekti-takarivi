@@ -1,5 +1,5 @@
 
-package bibtex.controller;
+package takarivi.bibtex.controller;
 
 import java.util.ArrayList;
 import java.util.List;

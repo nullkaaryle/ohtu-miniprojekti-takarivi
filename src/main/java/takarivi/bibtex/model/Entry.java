@@ -128,9 +128,9 @@ public class Entry {
         String year = (String) getFields().get(FieldType.YEAR).getContent();
         if (!year.equals("")) {
             if (year.length() > 2) {
-                sb.append(year.substring(year.length() - 2, year.length()));
+                sb.append(year.substring(Math.max(0, year.length() - 2), year.length()));
             } else {
-                sb.append(year.substring(year.length() - 4, year.length()));
+                sb.append(year.substring(Math.max(0, year.length() - 4), year.length()));
             }
         }
         

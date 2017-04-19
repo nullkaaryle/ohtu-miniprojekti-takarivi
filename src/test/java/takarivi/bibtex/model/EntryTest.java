@@ -1,5 +1,4 @@
-
-package bibtex.model;
+package takarivi.bibtex.model;
 
 import gherkin.lexer.Fi;
 import java.util.Map;
@@ -11,9 +10,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import takarivi.bibtex.enums.EntryType;
-import takarivi.bibtex.enums.FieldType;
-import takarivi.bibtex.model.Entry;
-import takarivi.bibtex.model.Field;
 
 
 public class EntryTest {
