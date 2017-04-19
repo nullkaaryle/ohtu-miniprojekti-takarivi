@@ -18,8 +18,11 @@ import takarivi.bibtex.model.Field;
 
 public class EntryTest {
     Entry artikkeli;
-    Entry kirja;
-    Entry julkaisu;
+    Field author;
+    Field title;
+    Field journal;
+    Field year;
+    Field volume;
     
     public EntryTest() {
     }
@@ -28,8 +31,11 @@ public class EntryTest {
     @Before
     public void setUp() {
         artikkeli = new Entry(EntryType.ARTICLE);
-        kirja = new Entry(EntryType.BOOK);
-        julkaisu = new Entry(EntryType.INPROCEEDINGS);
+        author = new Field(FieldType.AUTHOR, "Maija", 0);
+        title = new Field(FieldType.TITLE, "Nimi", 0);
+        journal = new Field(FieldType.JOURNAL, "Lehti", 0);
+        
+        
     }
     
     @Test
