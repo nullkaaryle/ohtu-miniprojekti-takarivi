@@ -1,4 +1,4 @@
 @article{lol, 
-Author = "Kakkis",
+Author = {Kakkis},
 }
 

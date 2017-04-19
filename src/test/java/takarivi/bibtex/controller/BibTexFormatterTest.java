@@ -72,7 +72,7 @@ public class BibTexFormatterTest {
     @Test
     public void kirjoittaaOikein() {
         String tiedostonSisalto = formatter.fileToString();
-        String oltava = "@article{lol, \nAuthor = \"Kakkis\",\n}\n\n";
+        String oltava = "@article{lol, \nAuthor = {Kakkis},\n}\n\n";
         assertEquals(oltava, tiedostonSisalto);
     }
 
