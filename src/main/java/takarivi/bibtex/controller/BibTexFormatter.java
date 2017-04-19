@@ -64,9 +64,9 @@ public class BibTexFormatter implements Formatter {
             Field field = entry.getFields().get(iterator.next());
             if (!((String) field.getContent()).equals("")) {
                 builder.append(field.getFieldType().toString());
-                builder.append(" = \"");
+                builder.append(" = {");
                 builder.append(TextUtils.convertToSpecial((String) field.getContent()));
-                builder.append("\"").append(iterator.hasNext() ? "," : "").append("\n");
+                builder.append("}").append(iterator.hasNext() ? "," : "").append("\n");
             }
         }
         builder.append("}");
