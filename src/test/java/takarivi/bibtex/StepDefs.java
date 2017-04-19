@@ -1,5 +1,4 @@
-
-package bibtex.takarivi;
+package takarivi.bibtex;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -29,6 +28,19 @@ public class StepDefs {
     @Given("^add article is selected$")
     public void add_article_is_selected() throws Throwable {
         inputLines.add("add");
+        inputLines.add("article");
+    }
+
+    @Given("^add book is selected$")
+    public void add_book_is_selected() throws Throwable {
+        inputLines.add("add");
+        inputLines.add("book");
+    }
+
+    @Given("^add inproceedings is selected$")
+    public void add_inproceedings_is_selected() throws Throwable {
+        inputLines.add("add");
+        inputLines.add("inproceedings");
     }
 
 //WHEN
@@ -40,7 +52,22 @@ public class StepDefs {
 //THEN
     @Then("^article is added$")
     public void article_is_added() throws Throwable {
-        //TextUi:n EntryHandlerin listaan on lisätty article-entry
+        inputLines.add("quit");
+        ui = new TextUI(io);
+        ui.run();
+        assertEquals(1, ui.getEntryHandler().getEntries().size());
+    }
+
+    @Then("^book is added$")
+    public void book_is_added() throws Throwable {
+        inputLines.add("quit");
+        ui = new TextUI(io);
+        ui.run();
+        assertEquals(1, ui.getEntryHandler().getEntries().size());
+    }
+
+    @Then("^inproceedings is added$")
+    public void inproceedings_is_added() throws Throwable {
         inputLines.add("quit");
         ui = new TextUI(io);
         ui.run();
