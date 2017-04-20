@@ -34,12 +34,12 @@ public class BibTexFormatter implements Formatter {
     }
 
     @Override
-    public void export(List<Entry> entries, EntryType entrytype, String filename) {
+    public void export(List<Entry> entries, String filename) {
         file = new File(filename);
         try {
             writer = new FileWriter(file);
             for (Entry entry : entries) {
-                CharSequence bibtex = buildString(entry, entrytype);
+                CharSequence bibtex = buildString(entry);
                 writer.append(bibtex);
             }
             writer.close();
@@ -47,11 +47,11 @@ public class BibTexFormatter implements Formatter {
         }
     }
 
-    public String buildString(Entry entry, EntryType entrytype) {
+    public String buildString(Entry entry) {
         StringBuilder builder = new StringBuilder();
         Set<FieldType> fields = entry.getFields().keySet();
         builder.append("@");
-        builder.append(entrytype.toString());
+        builder.append(entry.getEntryType().toString());
         builder.append("{");
         builder.append(entry.getBibTexKey());
         builder.append(", \n");

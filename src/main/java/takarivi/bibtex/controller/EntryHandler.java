@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import takarivi.bibtex.enums.EntryType;
+import takarivi.bibtex.enums.FieldType;
 import takarivi.bibtex.model.Entry;
 
 /**

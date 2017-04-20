@@ -50,7 +50,7 @@ public class BibTexFormatterTest {
         entry.setBibTexKey("lol");
 
         entrit.add(entry);
-        formatter.export(entrit, EntryType.ARTICLE, "moi.txt");
+        formatter.export(entrit, "moi.txt");
     }
 
     @After

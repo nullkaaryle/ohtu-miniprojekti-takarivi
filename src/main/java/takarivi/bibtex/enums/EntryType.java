@@ -6,17 +6,17 @@ import java.util.List;
 public enum EntryType {
     ARTICLE(
         "article",
-        lista(FieldType.AUTHOR, FieldType.TITLE, FieldType.JOURNAL, FieldType.YEAR, FieldType.VOLUME),
-        lista(FieldType.NUMBER, FieldType.PAGES, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.JOURNAL, FieldType.YEAR, FieldType.VOLUME),
+        toList(FieldType.NUMBER, FieldType.PAGES, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
     ), BOOK(
         "book",
-        lista(FieldType.AUTHOR, FieldType.TITLE, FieldType.PUBLISHER, FieldType.YEAR),
-        lista(FieldType.VOLUME, FieldType.SERIES, FieldType.ADDRESS, FieldType.EDITION, 
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.PUBLISHER, FieldType.YEAR),
+        toList(FieldType.VOLUME, FieldType.SERIES, FieldType.ADDRESS, FieldType.EDITION, 
               FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
     ), INPROCEEDINGS(
         "inproceedings",
-        lista(FieldType.AUTHOR, FieldType.TITLE, FieldType.BOOKTITLE, FieldType.YEAR),
-        lista(FieldType.EDITOR, FieldType.VOLUME, FieldType.SERIES, FieldType.PAGES,
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.BOOKTITLE, FieldType.YEAR),
+        toList(FieldType.EDITOR, FieldType.VOLUME, FieldType.SERIES, FieldType.PAGES,
               FieldType.ADDRESS, FieldType.MONTH, FieldType.ORGANIZATION, FieldType.PUBLISHER,
               FieldType.NOTE, FieldType.KEY));
 
@@ -30,7 +30,7 @@ public enum EntryType {
         this.name = name;
     }
     
-    private static List<FieldType> lista(FieldType... fieldtypes) {
+    private static List<FieldType> toList(FieldType... fieldtypes) {
         return Arrays.asList(fieldtypes);
     }
     

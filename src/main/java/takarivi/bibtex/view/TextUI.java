@@ -95,7 +95,7 @@ public class TextUI {
             }
             if (cmd.equals("write")) {
                 String filename = io.readIn("Enter file name: ");
-                f.export(entryHandler.getEntries(), EntryType.ARTICLE, filename);
+                f.export(entryHandler.getEntries(), filename);
                 
             }
 
