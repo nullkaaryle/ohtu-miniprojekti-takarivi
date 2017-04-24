@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>k</title> 
+    </head>
+    <body>
+        <form action="#" th:action="@{/add/{entrytype}/(entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
+            <span>required:</span>
+            <ul th:each="fieldtype, stat : ${#lists.sort(entry.required)}">
+                <li>
+                    <label th:for="${fieldtype}" th:text="${fieldtype}">label</label>
+                    <input type="text" th:value="${entry.fields.get(fieldtype)}" 
+                           th:field="*{requiredList[__${stat.index}__]}" />
+                </li>
+            </ul>
+            <span>optional:</span>
+            <ul th:each="fieldtype, stat : ${#lists.sort(entry.optional)}">
+                <li>
+                    <label th:for="${fieldtype}" th:text="${fieldtype}">label</label>
+                    <input type="text" th:value="${entry.fields.get(fieldtype)}"
+                           th:field="*{optionalList[__${stat.index}__]}" />
+                </li>
+            </ul>
+            <input type="hidden" name="id" th:value="${entry.id}" />
+            <input type="hidden" name="entry" th:field="${entry}" />
+            <button type="submit" name="">lähetä</button>
+        </form>
+    </body>
+</html>
+
