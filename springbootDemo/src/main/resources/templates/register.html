@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>k</title> 
+</head>
+    <body>
+        <form action="#" th:action="@{/register/}" method="POST">
+            <ul>
+                <li>
+                    <label for="username">Username</label>
+                    <input type="text" name="username" />
+                </li>
+                <li>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" />
+                </li>
+                <li>
+                    <input type="submit" value="Register" />
+                </li>
+            </ul>
+        </form>
+    </body>
+</html>

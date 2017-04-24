@@ -15,5 +15,5 @@ import takarivi.bibtex.entities.Customer;
  */
 @RepositoryRestResource
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
-    void findByUsername(String username);
+    Customer findByUsername(String username);
 }

@@ -41,4 +41,8 @@ public class CustomerDetailsService implements UserDetailsService {
                 true,
                 Arrays.asList(new SimpleGrantedAuthority("USER")));
     }
+    
+    public void save(Customer customer) {
+        customerRepository.save(customer);
+    }
 }    
