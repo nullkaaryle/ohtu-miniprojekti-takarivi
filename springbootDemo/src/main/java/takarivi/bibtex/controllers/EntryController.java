@@ -68,10 +68,18 @@ public class EntryController {
     @RequestMapping(value = "/add/{type}/", method = RequestMethod.POST)
     public String saveReference(Model model, @PathVariable String type, @ModelAttribute Entry entry, 
             @ModelAttribute EntryForm entryForm) {
+        /*
+            Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
+            HashMapeja... yritetään selittää.
+        */
         entry = new Entry(EntryType.valueOf(type.toUpperCase()));
         System.out.println(entryForm.getRequiredList());
         FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
         Arrays.sort(req);
+        /*
+            Thymeleafista palautuu kaksi ArrayListiä, tuo ^^^ on siksi että FieldTypet olisivat
+            req-arrayssä samassa järjestyksessä
+        */
         for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
             String s = entryForm.getRequiredList().get(idx);
             System.out.println(s);
@@ -100,6 +108,10 @@ public class EntryController {
         ArrayList<String> optionalList = new ArrayList<>(entry.getOptional().size());
         FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
         Arrays.sort(req);
+        /*
+            Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
+            joissa kenttien arvot, yllä järjestellään taas FieldTypet
+        */
         for (int idx = 0; idx < entry.getRequired().size(); idx++) {
             requiredList.add(idx, entry.getField(req[idx]));
         }
