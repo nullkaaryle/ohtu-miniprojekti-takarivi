@@ -17,7 +17,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
  * @author pyykkomi
  */
 @Entity
-public class User extends AbstractPersistable<Long> implements Serializable {
+public class Customer extends AbstractPersistable<Long> implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
