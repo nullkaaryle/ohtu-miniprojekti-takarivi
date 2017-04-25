@@ -129,6 +129,16 @@ public class EntryController {
         return "form";
     }
     
+    @RequestMapping(value = "/delete/{type}/{id}", method = RequestMethod.GET)
+    public String removeEntry(Model Model, @PathVariable String type, @PathVariable long id) {
+        Entry entry = entryService.findById(id);
+        if (entry != null) {
+            entryService.delete(entry);
+        }
+        return "redirect:/list";
+    }
+            
+    // helpers
     private FieldType[] fieldTypesOrdered(Set<FieldType> fieldTypes) {
         FieldType[] ret = fieldTypes.toArray(new FieldType[fieldTypes.size()]);
         Arrays.sort(ret);

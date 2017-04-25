@@ -40,7 +40,7 @@
                     <td>
                         <a class="btn btn-danger btn-sm" 
                            href="#" 
-                           th:href="@{/remove/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}"
+                           th:href="@{/delete/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}"
                            onclick="return confirm('Really remove?')">Remove</a>
                     </td>
                 </tr>
