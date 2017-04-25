@@ -7,28 +7,26 @@
         <title>k</title> 
     </head>
     <body>
-        <script language="JavaScript">
-            $('#select-all').click(function (event) {
-                if (this.checked) {
-                    // Iterate each checkbox
-                    $(':checkbox').each(function () {
-                        this.checked = true;
-                    });
-                } else {
-                    $(':checkbox').each(function () {
-                        this.checked = false;
-                    });
+        <script type="text/javascript" language="JavaScript">// <![CDATA[
+            function checkAll(formname, checktoggle)
+            {
+                var checkboxes = new Array();
+                checkboxes = document[formname].getElementsByTagName('input');
+
+                for (var i = 0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].type == 'checkbox') {
+                        checkboxes[i].checked = checktoggle;
+                    }
                 }
-            });
-        </script>
+            }
+        // ]]></script>
 
         <div th:include="fragments/base :: menu" />
 
         <!--        <div th:if="${userLoggedIn}">-->
         <div class="form-group blu-margin">
-            <form class="navbar-form" action="#" th:action="@{/add/}" th:object="${entryTypeForm}" th:method="POST">
+            <form class="navbar-form" action="#" th:action="@{/addnew}" th:object="${entryTypeForm}" th:method="POST">
                 <select class="form control" th:field="*{selection}">
-                    <option value="" selected="">New entry...</option>
                     <option th:each="entryType : *{entryTypes}"
                             th:value="${entryType}"
                             th:text="${entryType}"></option>
@@ -38,11 +36,12 @@
         </div>
         <!--        </div>-->
 
-        <form action="#" th:action="@{/list/}" method="POST">
+        <form action="#" name="entryList" th:action="@{/list/selected}" th:object="${entryCheckBoxForm}" th:method="POST">
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>id</th>
+                        <th>type</th>
                         <th>bibtexkey</th>
                         <th>author(s)</th>
                         <th>title</th>
@@ -69,7 +68,7 @@
                             <span th:text="${entry.title}">title</span>
                         </td>
                         <td>
-                            <input type="checkbox" th:name="entryCheckBox[__${entry.id}__]" />
+                            <input type="checkbox" th:field="*{selected}" th:value="${entry.id}" />
                         </td>
                         <td>
                             <a class="btn btn-danger btn-sm" 
@@ -81,14 +80,25 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td colspan="4"></td>
+                        <td colspan="5"></td>
                         <td>
-                            <span>select all <input type="checkbox" name="select-all" id="select-all" /></span>
+                            <span><input type="checkbox" name="select-all" onclick="checkAll('entryList', true)" /> select all</span>
                         </td>
                         <td>
-                            <button type="submit" name=""
+                            <button type="submit" name="action" value="remove"
                                     class="btn btn-danger" 
                                     onclick="return confirm('Really remove?')">Remove selected</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5"></td>
+                        <td>
+                            <label>Filename:</label>
+                            <input type="text" th:field="*{filename}" />
+                        </td>
+                        <td>
+                            <button type="submit" name="action" value="bibtex"
+                                    class="btn btn-default">BibTex selected</button>
                         </td>
                     </tr>
                 </tbody>

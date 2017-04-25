@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
@@ -53,10 +54,8 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @Enumerated(EnumType.STRING)
     private List<Tag> tags;
     
-    @ElementCollection
-    @ManyToMany
-    @Enumerated(EnumType.STRING)
-    private List<User> users;
+    @ManyToOne
+    private Customer customer;
     
     public Entry() {
 
@@ -68,7 +67,6 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.required = entryType.getRequired();
         this.optional = entryType.getOptional();
         this.tags = new ArrayList<>();
-        this.users = new ArrayList<>();
         this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
@@ -182,17 +180,14 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.title = title;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
-    
-    public void addUser(User user) {
-        users.add(user);
-    }
+
     
     public void setAuthorsAndTitle() {
         if (getFields().containsKey(FieldType.AUTHOR) && !getFields().get(FieldType.AUTHOR).equals("")) {

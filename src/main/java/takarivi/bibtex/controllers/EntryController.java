@@ -16,16 +16,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import takarivi.bibtex.forms.EntryListForm;
 import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
@@ -36,14 +38,14 @@ import takarivi.bibtex.services.CustomerService;
  */
 @Controller
 public class EntryController {
-    
+
     @Autowired
     public EntryService entryService;
     @Autowired
     public CustomerDetailsService customerDetailsService;
     @Autowired
     public CustomerService customerService;
-    
+
     @RequestMapping(value = "/addrandom", method = RequestMethod.GET)
     public String addRandom(Model model) {
         Entry e = new Entry(EntryType.BOOK);
@@ -53,7 +55,7 @@ public class EntryController {
         entryService.save(e);
         return "redirect:/list";
     }
-    
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String listEntries(Model model) {
         List<Entry> entries = entryService.findall();
@@ -64,19 +66,55 @@ public class EntryController {
             entryTypes.add(et.toString());
         }
         entryTypeForm.setEntryTypes(entryTypes);
-//        System.out.println(entryTypes.toString());
         model.addAttribute("entryTypeForm", entryTypeForm);
+        model.addAttribute("entryCheckBoxForm", new EntryListForm());
 //        model.addAttribute("userLoggedIn", customerService.findByUsername("testi"/*auth.getName()*/));
 //        System.out.println(customerService.findByUsername("testi"));
 //        System.out.println(customerDetailsService.loadUserByUsername("testi"));
         return "list";
     }
-    
-    @RequestMapping(value = "/add/", method = RequestMethod.POST) 
-    public String addEntryOfEntryType(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
-        return "redirect:/add/" + entryTypeForm.getSelection() + "/";
+
+    @RequestMapping(value = "/list/selected", params = "action=remove", method = RequestMethod.POST)
+    public String removeSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm) {
+        for (Long id : entryCheckBoxForm.getSelected()) {
+            Entry entry = entryService.findById(id);
+            if (entry != null) {
+                entryService.delete(entry);
+            }
+        }
+        return "redirect:/list";
     }
     
+    @RequestMapping(value = "/list/selected", params = "action=bibtex", method = RequestMethod.POST,
+                    produces = "application/x-bibtex")
+    @ResponseBody
+    public String bibtexSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm,
+                                 HttpServletResponse response) {
+        List<Entry> entries = new ArrayList<>();
+        for (Long id : entryCheckBoxForm.getSelected()) {
+            Entry entry = entryService.findById(id);
+            if (entry != null) {
+                entries.add(entry);
+            }
+        }
+        String filename = "default";
+        if (!entryCheckBoxForm.getFilename().equals("")) {
+            filename = entryCheckBoxForm.getFilename();
+        }
+        response.addHeader("Content-disposition", "attachment; filename=\""+filename+".bib\"");
+        return entryService.formatBibTex(entries);
+    }
+
+    @RequestMapping(value = "/addnew", method = RequestMethod.POST)
+    public String addEntryOfEntryType(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
+        for (EntryType et : EntryType.values()) {
+            if (entryTypeForm.getSelection().equals(et.toString())) {
+                return "redirect:/add/" + entryTypeForm.getSelection() + "/";
+            }
+        }
+        return "redirect:/list";
+    }
+
     @RequestMapping(value = "/add/{type}/", method = RequestMethod.GET)
     public String addEntry(Model model, @PathVariable String type, @ModelAttribute Entry entry) {
         EntryType entryType = findEntryType(type);
@@ -92,37 +130,39 @@ public class EntryController {
         model.addAttribute("sendAction", "add");
         return "form";
     }
-    
+
     @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
-    public String saveEntry(Model model, @PathVariable String type, @ModelAttribute Entry entry, 
+    public String saveEntry(Model model, @PathVariable String type, @ModelAttribute Entry entry,
             @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
             HttpServletRequest request) {
         /*
-            Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
-            HashMapeja... yritetään selittää.
-        */
+         Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
+         HashMapeja... yritetään selittää.
+         */
         String path = request.getServletPath();
-        System.out.println(entry.getId());
         if (path.contains("add")) {
             entry = new Entry(EntryType.valueOf(type.toUpperCase()));
-        }
-        else {
+        } else {
             entry = entryService.findById(entryForm.getId());
         }
-        System.out.println(entryForm.getRequiredList());
         FieldType[] req = fieldTypesOrdered(entry.getRequired());
         FieldType[] opt = fieldTypesOrdered(entry.getOptional());
         setEntryFields(entry, entryForm, req, opt);
         entry.setAuthorsAndTitle();
-        entry.setBibTexKey(entry.createBibTexKey());
+        System.out.println(entryForm.getBibTexKey());
+        if (entryForm.getBibTexKey().equals("")) {
+            entry.setBibTexKey(entry.createBibTexKey());
+        } else {
+            entry.setBibTexKey(entryForm.getBibTexKey());
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.isAuthenticated()) {
-            entry.addUser((User) auth.getDetails());
+//            entry.addCustomer();
         }
         entryService.save(entry);
         return "redirect:/list";
     }
-    
+
     @RequestMapping(value = "/edit/{type}/{id}/", method = RequestMethod.GET)
     public String editEntry(Model model, @PathVariable String type, @PathVariable long id,
             @ModelAttribute Entry entry, @ModelAttribute EntryForm entryForm) {
@@ -136,9 +176,9 @@ public class EntryController {
         FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
         Arrays.sort(req);
         /*
-            Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
-            joissa kenttien arvot, yllä järjestellään taas FieldTypet
-        */
+         Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
+         joissa kenttien arvot, yllä järjestellään taas FieldTypet
+         */
         for (int idx = 0; idx < entry.getRequired().size(); idx++) {
             requiredList.add(idx, entry.getField(req[idx]));
         }
@@ -151,12 +191,13 @@ public class EntryController {
         entryForm.setOptionalList(optionalList);
         entryForm.setAction("edit");
         entryForm.setId(id);
+        entryForm.setBibTexKey(entry.getBibTexKey());
         model.addAttribute("entry", entry);
         model.addAttribute("entryForm", entryForm);
         model.addAttribute("sendAction", "edit");
         return "form";
     }
-    
+
     @RequestMapping(value = "/delete/{type}/{id}", method = RequestMethod.GET)
     public String removeEntry(Model Model, @PathVariable String type, @PathVariable long id) {
         Entry entry = entryService.findById(id);
@@ -165,14 +206,14 @@ public class EntryController {
         }
         return "redirect:/list";
     }
-            
+
     // helpers
     private FieldType[] fieldTypesOrdered(Set<FieldType> fieldTypes) {
         FieldType[] ret = fieldTypes.toArray(new FieldType[fieldTypes.size()]);
         Arrays.sort(ret);
         return ret;
     }
-    
+
     private void setEntryFields(Entry entry, EntryForm entryForm, FieldType[] req, FieldType[] opt) {
         for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
             String s = entryForm.getRequiredList().get(idx);
@@ -184,16 +225,17 @@ public class EntryController {
             entry.setField(opt[idx], s);
         }
     }
+
     private FieldType findFieldType(String field) {
         for (FieldType ft : FieldType.values()) {
             if (ft.toString().equals(field)) {
                 return ft;
             }
         }
-        
+
         return null;
     }
-    
+
     private FieldType findFieldTypeByOrder(Entry e, int idx) {
         if (idx < 0 || idx > FieldType.values().length) {
             return null;
@@ -209,9 +251,14 @@ public class EntryController {
         }
         return null;
     }
-    
+
     @ModelAttribute("entryTypeForm")
     public EntryTypeForm loadEntryTypeFormBean() {
         return new EntryTypeForm();
+    }
+
+    @ModelAttribute("entryCheckBoxForm")
+    public EntryListForm loadEntryCheckBoxFormBean() {
+        return new EntryListForm();
     }
 }
