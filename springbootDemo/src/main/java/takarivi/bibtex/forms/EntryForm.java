@@ -15,7 +15,16 @@ public class EntryForm {
     private ArrayList<String> requiredList = new ArrayList<>();
     private ArrayList<String> optionalList = new ArrayList<>();
     private Long id;
+    private String action;
 
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
+    
     public Long getId() {
         return id;
     }

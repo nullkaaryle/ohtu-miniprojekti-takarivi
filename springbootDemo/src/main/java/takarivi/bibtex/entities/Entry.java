@@ -7,7 +7,9 @@ import java.util.TreeSet;
 import takarivi.bibtex.enums.EntryType;
 import takarivi.bibtex.enums.FieldType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import javax.persistence.ElementCollection;
 
 import javax.persistence.Entity;
@@ -16,6 +18,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
@@ -41,8 +44,14 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @OrderColumn(name = "field_seq")
     private Set<FieldType> optional;
     @ElementCollection
+    @ManyToMany
     @Enumerated(EnumType.STRING)
-    private Set<Tag> tags;
+    private List<Tag> tags;
+    
+    @ElementCollection
+    @ManyToMany
+    @Enumerated(EnumType.STRING)
+    private List<Customer> customers;
     
     public Entry() {
         
@@ -53,7 +62,8 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.fields = new LinkedHashMap<>();
         this.required = entryType.getRequired();
         this.optional = entryType.getOptional();
-        this.tags = new TreeSet<>();
+        this.tags = new ArrayList<>();
+        this.customers = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
             fields.put(req, "");
@@ -138,11 +148,11 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.bibTexKey = bibTexKey;
     }
 
-    public Set<Tag> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(Set<Tag> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
     

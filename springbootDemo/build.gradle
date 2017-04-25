@@ -31,6 +31,12 @@ repositories {
 	}
 }
 
+project.ext {
+    cucumberVersion = "1.2.5"
+    junitVersion = "4.12"
+    seleniumVersion = "3.4.0"
+}
+
 run {
 	standardInput = System.in
 }
@@ -47,6 +53,14 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.security:spring-security-web:4.2.3.BUILD-SNAPSHOT')
 	compile('org.postgresql:postgresql:9.4-1201-jdbc4')
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: seleniumVersion
+    	testCompile("io.github.bonigarcia:webdrivermanager:1.6.2") {
+        	exclude group: 'org.seleniumhq.selenium'
+	}
 	runtime('com.h2database:h2')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile 'junit:junit:4.12'
