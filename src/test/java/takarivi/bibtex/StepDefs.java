@@ -38,4 +38,38 @@ public class StepDefs {
     public void tearDown() {
         driver.quit();
     }
+    
+//       @Given("^add article is selected$")
+//    public void add_article_is_selected() throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @When("^\"([^\"]*)\" is given$")
+//    public void is_given(String arg1) throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @Then("^article is added$")
+//    public void article_is_added() throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+//
+//    @When("^valid data is given$")
+//    public void valid_data_is_given(DataTable arg1) throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        // For automatic transformation, change DataTable to one of
+//        // List<YourType>, List<List<E>>, List<Map<K,V>> or Map<K,V>.
+//        // E,K,V must be a scalar (String, Integer, Date, enum etc)
+//        throw new PendingException();
+//    }
+//
+//    @Then("^a list of references is showed$")
+//    public void a_list_of_references_is_showed() throws Throwable {
+//        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+//    }
+
 }

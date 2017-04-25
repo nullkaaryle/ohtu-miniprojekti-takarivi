@@ -81,3 +81,9 @@ task(debug, dependsOn: 'classes', type: JavaExec)
     debug = true
 }
 
+task( browse, dependsOn: 'classes', type: JavaExec ) {
+    main = 'takarivi.bibtex.App'
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+mainClassName = 'takarivi.bibtex.App'

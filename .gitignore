@@ -2,3 +2,4 @@
 build/*
 /.nb-gradle/
 /springbootDemo/build/
+/vanha/.nb-gradle/
