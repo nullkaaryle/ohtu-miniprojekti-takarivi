@@ -9,11 +9,11 @@
         <title>k</title> 
     </head>
     <body>
-        <form action="#" th:action="@{/add/{entrytype}/(entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
+        <form action="#" th:action="@{/{action}/{entrytype}/(action = ${action}, entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
             <span>required:</span>
             <ul th:each="fieldtype, stat : ${#lists.sort(entry.required)}">
                 <li>
-                    <label th:for="${fieldtype}" th:text="${fieldtype}">label</label>
+                    <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
                     <input type="text" th:value="${entry.fields.get(fieldtype)}" 
                            th:field="*{requiredList[__${stat.index}__]}" />
                 </li>
@@ -28,7 +28,8 @@
             </ul>
             <input type="hidden" name="id" th:value="${entry.id}" />
             <input type="hidden" name="entry" th:field="${entry}" />
-            <button type="submit" name="">lähetä</button>
+            <input type="hidden" name="action" th:value="${action}" />
+            <button type="submit" name="">send</button>
         </form>
     </body>
 </html>

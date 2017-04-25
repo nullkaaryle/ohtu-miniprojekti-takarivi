@@ -62,17 +62,23 @@ public class EntryController {
         EntryForm entryForm = new EntryForm();
         model.addAttribute("entry", entry);
         model.addAttribute("entryForm", entryForm);
+        model.addAttribute("action", "add");
         return "form";
     }
     
-    @RequestMapping(value = "/add/{type}/", method = RequestMethod.POST)
+    @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
     public String saveReference(Model model, @PathVariable String type, @ModelAttribute Entry entry, 
-            @ModelAttribute EntryForm entryForm) {
+            @ModelAttribute EntryForm entryForm, @ModelAttribute String action) {
         /*
             Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
             HashMapeja... yritetään selittää.
         */
-        entry = new Entry(EntryType.valueOf(type.toUpperCase()));
+        System.out.println(action);
+        if (action.equals("add")) {
+            entry = new Entry(EntryType.valueOf(type.toUpperCase()));
+        } else {
+            entry = entryService.findById(entryForm.getId());
+        }
         System.out.println(entryForm.getRequiredList());
         FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
         Arrays.sort(req);
@@ -124,6 +130,7 @@ public class EntryController {
         entryForm.setOptionalList(optionalList);
         model.addAttribute("entry", entry);
         model.addAttribute("entryForm", entryForm);
+        model.addAttribute("action", "edit");
         return "form";
     }
     

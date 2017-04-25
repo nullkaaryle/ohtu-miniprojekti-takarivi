@@ -14,6 +14,15 @@ import java.util.ArrayList;
 public class EntryForm {
     private ArrayList<String> requiredList = new ArrayList<>();
     private ArrayList<String> optionalList = new ArrayList<>();
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     
     public ArrayList<String> getRequiredList() {
         return requiredList;
