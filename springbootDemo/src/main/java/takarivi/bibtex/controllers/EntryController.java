@@ -12,10 +12,10 @@ import takarivi.bibtex.forms.EntryForm;
 import takarivi.bibtex.services.EntryService;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -71,19 +71,20 @@ public class EntryController {
     
     @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
     public String saveEntry(Model model, @PathVariable String type, @ModelAttribute Entry entry, 
-            @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction) {
+            @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
+            HttpServletRequest request) {
         /*
             Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
             HashMapeja... yritetään selittää.
         */
-        System.out.println(sendAction);
-        System.out.println(entryForm.getAction());
-        if (entryForm.getAction().equals("add")) {
+        String path = request.getServletPath();
+        System.out.println(entry.getId());
+        if (path.contains("add")) {
             entry = new Entry(EntryType.valueOf(type.toUpperCase()));
         }
-//        else {
-//            entry = entryService.findById(entryForm.getId());
-//        }
+        else {
+            entry = entryService.findById(entryForm.getId());
+        }
         System.out.println(entryForm.getRequiredList());
         FieldType[] req = fieldTypesOrdered(entry.getRequired());
         FieldType[] opt = fieldTypesOrdered(entry.getOptional());
