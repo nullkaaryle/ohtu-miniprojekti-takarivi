@@ -24,20 +24,20 @@
 
         <div th:include="fragments/base :: menu" />
 
-<!--        <div th:if="${userLoggedIn}">-->
+        <!--        <div th:if="${userLoggedIn}">-->
+        <div class="form-group blu-margin">
             <form class="navbar-form" action="#" th:action="@{/add/}" th:object="${entryTypeForm}" th:method="POST">
-                <div class="form-group blu-margin">
-                    <select class="form control">
-                        <option value="" selected="">New entry...</option>
-                        <option th:each="entryType : ${entryTypes}"
-                                th:value="${entryType}"
-                                th:text="${entryType}"></option>
-                    </select>
-                    <button type="submit" class="btn btn-default">Add</button>
-                </div>
+                <select class="form control" th:field="*{selection}">
+                    <option value="" selected="">New entry...</option>
+                    <option th:each="entryType : *{entryTypes}"
+                            th:value="${entryType}"
+                            th:text="${entryType}"></option>
+                </select>
+                <button type="submit" class="btn btn-default">Add</button>
             </form>    
-<!--        </div>-->
-        
+        </div>
+        <!--        </div>-->
+
         <form action="#" th:action="@{/list/}" method="POST">
             <table class="table table-striped table-bordered">
                 <thead>

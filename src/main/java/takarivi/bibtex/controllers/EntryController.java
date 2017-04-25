@@ -56,10 +56,10 @@ public class EntryController {
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listEntries(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
+    public String listEntries(Model model) {
         List<Entry> entries = entryService.findall();
         model.addAttribute("entries", entries);
-//        EntryTypeForm entryTypeForm = new EntryTypeForm();
+        EntryTypeForm entryTypeForm = new EntryTypeForm();
         List<String> entryTypes = new ArrayList<>();
         for (EntryType et : EntryType.values()) {
             entryTypes.add(et.toString());
@@ -214,7 +214,8 @@ public class EntryController {
         return null;
     }
     
-    private void addUserLoggedIn(Model model) {
-        model.addAttribute("userLoggedin", customerDetailsService.loadUserByUsername("testi"/*auth.getName()*/));
+    @ModelAttribute("entryTypeForm")
+    public EntryTypeForm loadEntryTypeFormBean() {
+        return new EntryTypeForm();
     }
 }
