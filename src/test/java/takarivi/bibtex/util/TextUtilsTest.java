@@ -17,29 +17,27 @@ import static org.junit.Assert.*;
  * @author maijanen
  */
 public class TextUtilsTest {
+    private String aakkosia;
+    private String kaannetty;
     
     public TextUtilsTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
     @Before
     public void setUp() {
+        aakkosia = "KÄKÅKÖKÜkäkåkökü";
+        kaannetty = "K\\\"{A}K\\AAK\\\"{O}K\\\"{U}k\\\"{a}k\\aak\\\"{o}k\\\"{u}";
     }
     
-    @After
-    public void tearDown() {
+    @Test
+    public void fromToimii() {
+        String tulos = TextUtils.convertToSpecial(aakkosia);
+        assertEquals(kaannetty, tulos);
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
+    
+    @Test
+    public void toToimii() {
+        String tulos = TextUtils.convertFromSpecial(kaannetty);
+        assertEquals(aakkosia, tulos);
+    }
 }

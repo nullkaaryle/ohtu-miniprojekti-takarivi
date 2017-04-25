@@ -67,6 +67,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.optional = entryType.getOptional();
         this.tags = new ArrayList<>();
         this.customers = new ArrayList<>();
+        this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
             fields.put(req, "");
@@ -123,7 +124,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     }
 
     public void setRequired(Set<FieldType> required) {
-        this.required = required;
+        this.required = required;   
     }
     
     public Set<FieldType> getOptional() {
@@ -204,11 +205,11 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         
         StringBuilder sb = new StringBuilder();
         
-        String[] authors = getField(FieldType.AUTHOR).split(" and ");
-        if (authors.length <= 1) {
-            sb.append(authors[0].substring(0, 3).toUpperCase());
+        String[] auths = getField(FieldType.AUTHOR).split(" and ");
+        if (auths.length <= 1) {
+            sb.append(auths[0].substring(0, 3).toUpperCase());
         } else {
-            for (String author : authors) {
+            for (String author : auths) {
                 sb.append(author.toUpperCase().charAt(0));
             }
         }

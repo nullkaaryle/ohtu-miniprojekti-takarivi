@@ -64,5 +64,11 @@ public class BibTexFormatterTest {
         String verrattava = "@article{KEY, \nAuthor = {Maija},\nYear = {1999},\n}\n\n";
         assertEquals(verrattava, tuloste);
     }
+    
+    @Test
+    public void printtaaOikein() {
+        entries.add(test);
+        System.out.println(formatter.fileToString());
+    }
 
 }
