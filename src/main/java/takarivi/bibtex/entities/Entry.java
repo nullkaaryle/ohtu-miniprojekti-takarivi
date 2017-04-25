@@ -23,6 +23,7 @@ import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.core.userdetails.User;
 
 @Entity
 public class Entry extends AbstractPersistable<Long> implements Serializable {
@@ -55,7 +56,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @ElementCollection
     @ManyToMany
     @Enumerated(EnumType.STRING)
-    private List<Customer> customers;
+    private List<User> users;
     
     public Entry() {
 
@@ -67,7 +68,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.required = entryType.getRequired();
         this.optional = entryType.getOptional();
         this.tags = new ArrayList<>();
-        this.customers = new ArrayList<>();
+        this.users = new ArrayList<>();
         this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
@@ -181,12 +182,16 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.title = title;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+    
+    public void addUser(User user) {
+        users.add(user);
     }
     
     public void setAuthorsAndTitle() {

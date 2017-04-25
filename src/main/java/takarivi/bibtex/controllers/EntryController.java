@@ -19,14 +19,13 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import takarivi.bibtex.entities.Customer;
 import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
@@ -118,10 +117,7 @@ public class EntryController {
         entry.setBibTexKey(entry.createBibTexKey());
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.isAuthenticated()) {
-            UserDetails ud = customerDetailsService.loadUserByUsername(auth.getName());
-            Customer c = new Customer(ud.getUsername(), ud.getPassword());
-            entry.getCustomers().add(c);
-            
+            entry.addUser((User) auth.getDetails());
         }
         entryService.save(entry);
         return "redirect:/list";

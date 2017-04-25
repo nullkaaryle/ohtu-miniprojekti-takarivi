@@ -16,7 +16,8 @@ public class EntryForm {
     private ArrayList<String> optionalList = new ArrayList<>();
     private Long id;
     private String action;
-
+    private String bibTexKey;
+    
     public String getAction() {
         return action;
     }
@@ -48,4 +49,14 @@ public class EntryForm {
     public void setOptionalList(ArrayList<String> optionalList) {
         this.optionalList = optionalList;
     }
+
+    public String getBibTexKey() {
+        return bibTexKey;
+    }
+
+    public void setBibTexKey(String bibTexKey) {
+        this.bibTexKey = bibTexKey;
+    }
+    
+    
 }
