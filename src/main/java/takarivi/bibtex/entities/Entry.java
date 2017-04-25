@@ -58,7 +58,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     private List<Customer> customers;
     
     public Entry() {
-        
+
     }
 
     public Entry(EntryType entryType) {

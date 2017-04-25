@@ -12,6 +12,7 @@ package takarivi.bibtex.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,9 +21,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Profile("production")
 @Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//@EnableWebSecurity
+public class ProductionSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -33,7 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
 
-        http.authorizeRequests().anyRequest().permitAll();
 //        http.authorizeRequests()
 //                .antMatchers("/").permitAll()
 //                .antMatchers("/register/").permitAll()
@@ -45,8 +46,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("testi").password("testi").roles("USER");
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -55,3 +54,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 }
+

@@ -5,6 +5,8 @@
 
     <head th:include="fragments/base :: head(title=Title)">
         <title>k</title> 
+    </head>
+    <body>
         <script language="JavaScript">
             $('#select-all').click(function (event) {
                 if (this.checked) {
@@ -13,14 +15,29 @@
                         this.checked = true;
                     });
                 } else {
-                    $(':checkbox').each(function() {
+                    $(':checkbox').each(function () {
                         this.checked = false;
                     });
                 }
             });
-        </script>            
-    </head>
-    <body>
+        </script>
+
+        <div th:include="fragments/base :: menu" />
+
+<!--        <div th:if="${userLoggedIn}">-->
+            <form class="navbar-form" action="#" th:action="@{/add/}" th:object="${entryTypeForm}" th:method="POST">
+                <div class="form-group blu-margin">
+                    <select class="form control">
+                        <option value="" selected="">New entry...</option>
+                        <option th:each="entryType : ${entryTypes}"
+                                th:value="${entryType}"
+                                th:text="${entryType}"></option>
+                    </select>
+                    <button type="submit" class="btn btn-default">Add</button>
+                </div>
+            </form>    
+<!--        </div>-->
+        
         <form action="#" th:action="@{/list/}" method="POST">
             <table class="table table-striped table-bordered">
                 <thead>
@@ -38,6 +55,9 @@
                             <a href="#" th:href="@{/edit/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}">
                                 <span th:text="${entry.id}">id</span>
                             </a>
+                        </td>
+                        <td>
+                            <span th:text="${entry.entryType}">entrytype</span>
                         </td>
                         <td>
                             <span th:text="${entry.bibTexKey}">bibkey</span>
@@ -66,7 +86,9 @@
                             <span>select all <input type="checkbox" name="select-all" id="select-all" /></span>
                         </td>
                         <td>
-                            <input type="submit" class="btn btn-danger btn-sm" />
+                            <button type="submit" name=""
+                                    class="btn btn-danger" 
+                                    onclick="return confirm('Really remove?')">Remove selected</button>
                         </td>
                     </tr>
                 </tbody>

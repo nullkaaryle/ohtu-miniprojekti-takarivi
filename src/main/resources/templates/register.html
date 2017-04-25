@@ -9,15 +9,15 @@
     <title>k</title> 
 </head>
     <body>
-        <form action="#" th:action="@{/register/}" method="POST">
+        <form action="#" th:action="@{/register/}" th:object="${registerForm}" method="POST">
             <ul>
                 <li>
                     <label for="username">Username</label>
-                    <input type="text" name="username" />
+                    <input type="text" th:field="${registerForm.username}" name="username" />
                 </li>
                 <li>
                     <label for="password">Password</label>
-                    <input type="password" name="password" />
+                    <input type="password" th:field="${registerForm.password}" name="password" />
                 </li>
                 <li>
                     <input type="submit" value="Register" />

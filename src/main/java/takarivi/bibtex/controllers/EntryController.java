@@ -17,12 +17,19 @@ import java.util.Set;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import takarivi.bibtex.entities.Customer;
+import takarivi.bibtex.forms.EntryTypeForm;
+import takarivi.bibtex.services.CustomerDetailsService;
+import takarivi.bibtex.services.CustomerService;
 
 /**
  *
@@ -33,6 +40,10 @@ public class EntryController {
     
     @Autowired
     public EntryService entryService;
+    @Autowired
+    public CustomerDetailsService customerDetailsService;
+    @Autowired
+    public CustomerService customerService;
     
     @RequestMapping(value = "/addrandom", method = RequestMethod.GET)
     public String addRandom(Model model) {
@@ -41,16 +52,30 @@ public class EntryController {
         e.setField(FieldType.YEAR, "1972");
         e.setBibTexKey(e.createBibTexKey());
         entryService.save(e);
-        List<Entry> entries = entryService.findall();
-        model.addAttribute("entries", entries);
-        return "list";
+        return "redirect:/list";
     }
     
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listAll(Model model) {
+    public String listEntries(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
         List<Entry> entries = entryService.findall();
         model.addAttribute("entries", entries);
+//        EntryTypeForm entryTypeForm = new EntryTypeForm();
+        List<String> entryTypes = new ArrayList<>();
+        for (EntryType et : EntryType.values()) {
+            entryTypes.add(et.toString());
+        }
+        entryTypeForm.setEntryTypes(entryTypes);
+//        System.out.println(entryTypes.toString());
+        model.addAttribute("entryTypeForm", entryTypeForm);
+//        model.addAttribute("userLoggedIn", customerService.findByUsername("testi"/*auth.getName()*/));
+//        System.out.println(customerService.findByUsername("testi"));
+//        System.out.println(customerDetailsService.loadUserByUsername("testi"));
         return "list";
+    }
+    
+    @RequestMapping(value = "/add/", method = RequestMethod.POST) 
+    public String addEntryOfEntryType(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
+        return "redirect:/add/" + entryTypeForm.getSelection() + "/";
     }
     
     @RequestMapping(value = "/add/{type}/", method = RequestMethod.GET)
@@ -91,6 +116,13 @@ public class EntryController {
         setEntryFields(entry, entryForm, req, opt);
         entry.setAuthorsAndTitle();
         entry.setBibTexKey(entry.createBibTexKey());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.isAuthenticated()) {
+            UserDetails ud = customerDetailsService.loadUserByUsername(auth.getName());
+            Customer c = new Customer(ud.getUsername(), ud.getPassword());
+            entry.getCustomers().add(c);
+            
+        }
         entryService.save(entry);
         return "redirect:/list";
     }
@@ -180,5 +212,9 @@ public class EntryController {
             }
         }
         return null;
+    }
+    
+    private void addUserLoggedIn(Model model) {
+        model.addAttribute("userLoggedin", customerDetailsService.loadUserByUsername("testi"/*auth.getName()*/));
     }
 }

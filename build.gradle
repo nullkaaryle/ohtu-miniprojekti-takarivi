@@ -41,6 +41,10 @@ run {
 	standardInput = System.in
 }
 
+bootRun {
+	addResources = true
+}
+
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'takarivi.bibtex.Main'
 }
@@ -51,8 +55,10 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
 	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.security:spring-security-web:4.2.3.BUILD-SNAPSHOT')
 	compile('org.postgresql:postgresql:9.4-1201-jdbc4')
+	compile('org.apache.commons:commons-dbcp2:2.0')
     	compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
     	compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
     	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
