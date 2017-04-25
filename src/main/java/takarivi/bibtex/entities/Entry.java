@@ -35,6 +35,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     private String bibTexKey;
     @ElementCollection
     private List<String> authors;
+    private String authorString;
     private String title;
     @MapKeyClass(value = FieldType.class)
     @MapKeyEnumerated(value = EnumType.STRING)
@@ -67,6 +68,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.optional = entryType.getOptional();
         this.tags = new ArrayList<>();
         this.customers = new ArrayList<>();
+        this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
             fields.put(req, "");
@@ -195,6 +197,10 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         if (getFields().containsKey(FieldType.TITLE) && !getFields().get(FieldType.TITLE).equals("")) {
             title = getFields().get(FieldType.TITLE);
         }
+    }
+    
+    public String getAuthorString() {
+        return getFields().containsKey(FieldType.AUTHOR) ? getFields().get(FieldType.AUTHOR) : "";
     }
     
     public String createBibTexKey() {

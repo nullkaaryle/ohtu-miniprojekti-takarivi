@@ -3,12 +3,50 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>k</title> 
-</head>
+    <head th:include="fragments/base :: head(title=Title)">
+        <title>k</title> 
+    </head>
     <body>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>bibtexkey</th>
+                    <th>author(s)</th>
+                    <th>title</th>
+                </tr>
+            </thead>
+
+            <tbody th:each="entry : ${entries}">
+                <tr>
+                    <td>
+                        <a href="#" th:href="@{/edit/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}">
+                            <span th:text="${entry.id}">id</span>
+                        </a>
+                    </td>
+                    <td>
+                        <span th:text="${entry.bibTexKey}">bibkey</span>
+                    </td>
+                    <td>
+                        <span th:text="${entry.authorString}">auth</span>
+                    </td>
+                    <td>
+                        <span th:text="${entry.title}">title</span>
+                    </td>
+                    <td>
+                        <input type="checkbox" th:name="entryCheckBox[__${entry.id}__]" />
+                    </td>
+                    <td>
+                        <a class="btn btn-danger btn-sm" 
+                           href="#" 
+                           th:href="@{/remove/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}"
+                           onclick="return confirm('Really remove?')">Remove</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!--
         <ul th:each="entry : ${entries}">
             <li>
                 <a href="#" th:href="@{/edit/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}">
@@ -32,5 +70,6 @@
                 </ul>
             </li>
         </ul>
+        -->
     </body>
 </html>

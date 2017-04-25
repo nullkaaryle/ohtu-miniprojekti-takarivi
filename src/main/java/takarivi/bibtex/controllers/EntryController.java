@@ -89,6 +89,8 @@ public class EntryController {
         FieldType[] req = fieldTypesOrdered(entry.getRequired());
         FieldType[] opt = fieldTypesOrdered(entry.getOptional());
         setEntryFields(entry, entryForm, req, opt);
+        entry.setAuthorsAndTitle();
+        entry.setBibTexKey(entry.createBibTexKey());
         entryService.save(entry);
         return "redirect:/list";
     }

@@ -17,7 +17,7 @@ apply plugin: 'jacoco'
 
 jar {
     manifest {
-        attributes 'Main-Class': 'takarivi.bibtex.Main'
+        attributes 'Main-Class': 'takarivi.bibtex.App'
     }
 }
 
