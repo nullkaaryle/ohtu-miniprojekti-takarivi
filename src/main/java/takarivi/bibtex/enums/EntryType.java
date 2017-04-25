@@ -1,7 +1,7 @@
 package takarivi.bibtex.enums;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public enum EntryType {
     ARTICLE(
@@ -21,24 +21,28 @@ public enum EntryType {
               FieldType.NOTE, FieldType.KEY));
 
     private final String name;
-    private final List<FieldType> required;
-    private final List<FieldType> optional;
+    private final Set<FieldType> required;
+    private final Set<FieldType> optional;
     
-    EntryType(String name, List<FieldType> required, List<FieldType> optional) {
+    EntryType(String name, Set<FieldType> required, Set<FieldType> optional) {
         this.required = required;
         this.optional = optional;
         this.name = name;
     }
     
-    private static List<FieldType> toList(FieldType... fieldtypes) {
-        return Arrays.asList(fieldtypes);
+    private static Set<FieldType> toList(FieldType... fieldtypes) {
+        Set<FieldType> s = new LinkedHashSet<>();
+        for (FieldType ft : fieldtypes) {
+            s.add(ft);
+        }
+        return s;
     }
     
-    public List<FieldType> getRequired() {
+    public Set<FieldType> getRequired() {
         return required;
     }
     
-    public List<FieldType> getOptional() {
+    public Set<FieldType> getOptional() {
         return optional;
     }
     

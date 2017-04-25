@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TextUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ohtu-miniprojekti-takarivi</a> &gt; <a href="index.source.html" class="el_package">takarivi.bibtex.util</a> &gt; <span class="el_source">TextUtils.java</span></div><h1>TextUtils.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package takarivi.bibtex.util;
+
+/**
+ *
+ * @author pyykkomi
+ */
+<span class="nc" id="L12">public class TextUtils {</span>
+    
+    public static String convertFromSpecial(String s) {
+<span class="nc" id="L15">        String conv = s.replace(&quot;\\\&quot;{a}&quot;, &quot;ä&quot;);</span>
+<span class="nc" id="L16">        conv = conv.replace(&quot;\\\&quot;{o}&quot;, &quot;ö&quot;);</span>
+<span class="nc" id="L17">        conv = conv.replace(&quot;\\\&quot;{u}&quot;, &quot;ü&quot;);</span>
+<span class="nc" id="L18">        conv = conv.replace(&quot;\\aa&quot;, &quot;å&quot;);</span>
+<span class="nc" id="L19">        conv = conv.replace(&quot;\\\&quot;{A}&quot;, &quot;Ä&quot;);</span>
+<span class="nc" id="L20">        conv = conv.replace(&quot;\\\&quot;{O}&quot;, &quot;Ö&quot;);</span>
+<span class="nc" id="L21">        conv = conv.replace(&quot;\\\&quot;{U}&quot;, &quot;Ü&quot;);</span>
+<span class="nc" id="L22">        conv = conv.replace(&quot;\\AA&quot;, &quot;Å&quot;);</span>
+<span class="nc" id="L23">        return conv;</span>
+    }
+    
+    public static String convertToSpecial(String s) {
+<span class="fc" id="L27">        String conv = s.replace(&quot;ä&quot;, &quot;\\\&quot;{a}&quot;);</span>
+<span class="fc" id="L28">        conv = conv.replace(&quot;ö&quot;, &quot;\\\&quot;{o}&quot;);</span>
+<span class="fc" id="L29">        conv = conv.replace(&quot;ü&quot;, &quot;\\\&quot;{u}&quot;);</span>
+<span class="fc" id="L30">        conv = conv.replace(&quot;å&quot;, &quot;\\aa&quot;);</span>
+<span class="fc" id="L31">        conv = conv.replace(&quot;Ä&quot;, &quot;\\\&quot;{A}&quot;);</span>
+<span class="fc" id="L32">        conv = conv.replace(&quot;Ö&quot;, &quot;\\\&quot;{O}&quot;);</span>
+<span class="fc" id="L33">        conv = conv.replace(&quot;Ü&quot;, &quot;\\\&quot;{U}&quot;);</span>
+<span class="fc" id="L34">        conv = conv.replace(&quot;Å&quot;, &quot;\\AA&quot;);</span>
+<span class="fc" id="L35">        return conv;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.7.201606060606</span></div></body></html>

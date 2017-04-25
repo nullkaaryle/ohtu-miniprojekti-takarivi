@@ -2,11 +2,13 @@ package takarivi.bibtex.enums;
 
 public enum FieldType {
 
-    ADDRESS("Address", ContentType.STRING),
     AUTHOR("Author", ContentType.STRING),
-    BOOKTITLE("BookTitle", ContentType.STRING),
-    EDITION("Edition", ContentType.STRING),
     EDITOR("Editor", ContentType.STRING),
+    TITLE("Title", ContentType.STRING),
+    BOOKTITLE("BookTitle", ContentType.STRING),
+    YEAR("Year", ContentType.STRING),
+    ADDRESS("Address", ContentType.STRING),
+    EDITION("Edition", ContentType.STRING),
     JOURNAL("Journal", ContentType.STRING),
     KEY("Key", ContentType.STRING),
     MONTH("Month", ContentType.STRING),
@@ -16,9 +18,7 @@ public enum FieldType {
     PAGES("Pages", ContentType.STRING),
     PUBLISHER("Publisher", ContentType.STRING),
     SERIES("Series", ContentType.STRING),
-    TITLE("Title", ContentType.STRING),
-    VOLUME("Volume", ContentType.STRING),
-    YEAR("Year", ContentType.STRING);
+    VOLUME("Volume", ContentType.STRING);
 
     private final String title;
     private final ContentType contentType;

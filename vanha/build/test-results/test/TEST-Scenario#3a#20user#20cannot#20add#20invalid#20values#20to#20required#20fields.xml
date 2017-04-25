@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Scenario: user cannot add invalid values to required fields" tests="22" skipped="12" failures="2" errors="0" timestamp="2017-04-12T13:18:33" hostname="fuxi16" time="0.161">
+  <properties/>
+  <testcase name="Given add book is selected" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="When &quot;author&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;title&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;publisher&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;invalidvalue&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.001">
+    <skipped/>
+  </testcase>
+  <testcase name="Then error message is shown" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="classMethod" classname="Scenario: user cannot add invalid values to required fields" time="0.005"/>
+  <testcase name="Given add inproceedings is selected" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="When &quot;author&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;title&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;booktitle&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="And &quot;invalidvalue&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="Then error message is shown" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <skipped/>
+  </testcase>
+  <testcase name="classMethod" classname="Scenario: user cannot add invalid values to required fields" time="0.003"/>
+  <testcase name="Given add article is selected" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="When &quot;aa11&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="And &quot;author&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="And &quot;title&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="And &quot;journal&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="And &quot;invalidvalue&quot; is given" classname="Scenario: user cannot add invalid values to required fields" time="0.0"/>
+  <testcase name="Then error message is shown and article is not added" classname="Scenario: user cannot add invalid values to required fields" time="0.0">
+    <failure message="java.lang.AssertionError" type="java.lang.AssertionError">java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertTrue(Assert.java:52)
+	at bibtex.takarivi.StepDefs.error_message_is_shown_and_article_is_not_added(StepDefs.java:57)
+	at ✽.Then error message is shown and article is not added(bibtex/takarivi/addarticle.feature:30)
+</failure>
+  </testcase>
+  <testcase name="classMethod" classname="Scenario: user cannot add invalid values to required fields" time="0.006">
+    <failure message="java.lang.AssertionError" type="java.lang.AssertionError">java.lang.AssertionError
+	at org.junit.Assert.fail(Assert.java:86)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at org.junit.Assert.assertTrue(Assert.java:52)
+	at bibtex.takarivi.StepDefs.error_message_is_shown_and_article_is_not_added(StepDefs.java:57)
+	at ✽.Then error message is shown and article is not added(bibtex/takarivi/addarticle.feature:30)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

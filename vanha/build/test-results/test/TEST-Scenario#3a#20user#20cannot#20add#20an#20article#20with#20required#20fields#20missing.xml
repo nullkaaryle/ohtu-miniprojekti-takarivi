@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Scenario: user cannot add an article with required fields missing" tests="4" skipped="0" failures="2" errors="0" timestamp="2017-04-12T13:18:33" hostname="fuxi16" time="0.01">
+  <properties/>
+  <testcase name="Given add article is selected" classname="Scenario: user cannot add an article with required fields missing" time="0.0"/>
+  <testcase name="When &quot;&quot; is given" classname="Scenario: user cannot add an article with required fields missing" time="0.0"/>
+  <testcase name="Then error message is shown and article is not added" classname="Scenario: user cannot add an article with required fields missing" time="0.005">
+    <failure message="java.lang.AssertionError: expected:&lt;1&gt; but was:&lt;0&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;1&gt; but was:&lt;0&gt;
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:631)
+	at bibtex.takarivi.StepDefs.error_message_is_shown_and_article_is_not_added(StepDefs.java:58)
+	at ✽.Then error message is shown and article is not added(bibtex/takarivi/addarticle.feature:21)
+</failure>
+  </testcase>
+  <testcase name="classMethod" classname="Scenario: user cannot add an article with required fields missing" time="0.01">
+    <failure message="java.lang.AssertionError: expected:&lt;1&gt; but was:&lt;0&gt;" type="java.lang.AssertionError">java.lang.AssertionError: expected:&lt;1&gt; but was:&lt;0&gt;
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.failNotEquals(Assert.java:834)
+	at org.junit.Assert.assertEquals(Assert.java:645)
+	at org.junit.Assert.assertEquals(Assert.java:631)
+	at bibtex.takarivi.StepDefs.error_message_is_shown_and_article_is_not_added(StepDefs.java:58)
+	at ✽.Then error message is shown and article is not added(bibtex/takarivi/addarticle.feature:21)
+</failure>
+  </testcase>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

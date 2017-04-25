@@ -1,6 +1,18 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.2.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
 
 apply plugin: 'java'
 apply plugin: 'application'
+apply plugin: 'org.springframework.boot'
 apply plugin: 'jacoco'
 
 jar {
@@ -9,29 +21,51 @@ jar {
     }
 }
 
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
 repositories {
-    jcenter()
-    mavenCentral()
+	mavenCentral()
+	maven {
+		url 'https://repo.spring.io/libs-snapshot'		
+	}
 }
 
-mainClassName = 'takarivi.bibtex.Main'
+project.ext {
+    cucumberVersion = "1.2.5"
+    junitVersion = "4.12"
+    seleniumVersion = "3.4.0"
+}
 
 run {
-    standardInput = System.in
+	standardInput = System.in
 }
 
 if (!hasProperty('mainClass')) {
     ext.mainClass = 'takarivi.bibtex.Main'
 }
 
-project.ext {
-    cucumberVersion = '1.2.5'
-}
-
 dependencies {
-    testCompile 'junit:junit:4.12'    
-    testCompile 'info.cukes:cucumber-java:1.2.5'
-    testCompile 'info.cukes:cucumber-junit:1.2.5'   
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-data-rest')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	compile('org.springframework.security:spring-security-web:4.2.3.BUILD-SNAPSHOT')
+	compile('org.postgresql:postgresql:9.4-1201-jdbc4')
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-firefox-driver', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-api', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-server', version: seleniumVersion
+    	compile group: 'org.seleniumhq.selenium', name: 'selenium-remote-driver', version: seleniumVersion
+    	testCompile("io.github.bonigarcia:webdrivermanager:1.6.2") {
+        	exclude group: 'org.seleniumhq.selenium'
+	}
+	runtime('com.h2database:h2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile 'junit:junit:4.12'
+    	testCompile 'info.cukes:cucumber-java:1.2.5'
+    	testCompile 'info.cukes:cucumber-junit:1.2.5'	
 }
 
 test {

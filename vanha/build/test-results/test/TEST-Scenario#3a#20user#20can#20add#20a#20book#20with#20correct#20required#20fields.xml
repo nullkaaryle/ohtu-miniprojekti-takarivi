@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Scenario: user can add a book with correct required fields" tests="15" skipped="0" failures="0" errors="0" timestamp="2017-04-20T11:11:23" hostname="fuxi16" time="0.012">
+  <properties/>
+  <testcase name="Given add book is selected" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="When &quot;author&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;publisher&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;title&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;2012&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.001"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.001"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.0"/>
+  <testcase name="And &quot;&quot; is given" classname="Scenario: user can add a book with correct required fields" time="0.001"/>
+  <testcase name="Then book is added" classname="Scenario: user can add a book with correct required fields" time="0.001"/>
+  <testcase name="classMethod" classname="Scenario: user can add a book with correct required fields" time="0.014"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
