@@ -3,34 +3,48 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <title>k</title> 
+    <head th:include="fragments/base :: head(title=Title)">
+        <title>title</title>
     </head>
     <body>
-        <form action="#" th:action="@{/{action}/{entrytype}/(action = ${entryForm.action}, entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
-            <span>required:</span>
-            <ul th:each="fieldtype, stat : ${#lists.sort(entry.required)}">
-                <li>
-                    <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
-                    <input type="text" th:value="${entry.fields.get(fieldtype)}" 
-                           th:field="*{requiredList[__${stat.index}__]}" required="required" />
-                </li>
-            </ul>
-            <span>optional:</span>
-            <ul th:each="fieldtype, stat : ${#lists.sort(entry.optional)}">
-                <li>
-                    <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
-                    <input type="text" th:value="${entry.fields.get(fieldtype)}"
-                           th:field="*{optionalList[__${stat.index}__]}" />
-                </li>
-            </ul>
-            <input type="hidden" name="id" th:value="${entry.id}" />
-            <input type="hidden" name="entry" th:field="${entry}" />
-            <input type="hidden" name="sendAction" th:value="${sendAction}" />
-            <button type="submit" name="">send</button>
-        </form>
+        <div id="main-container">
+            <div id="form" class="row">
+                <form action="#" th:action="@{/{action}/{entrytype}/(action = ${entryForm.action}, entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
+                    <div id="form-column-left" class="form-group">
+                        <span>required:</span>
+                        <ul th:each="fieldtype, stat : ${#lists.sort(entry.required)}">
+                            <li>
+                                <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
+                                <input type="text" th:value="${entry.fields.get(fieldtype)}" 
+                                       th:field="*{requiredList[__${stat.index}__]}" required="required" />
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <label for="bibtexKey">BibTexKey</label>
+                                <small id="formHelp">leave empty for generated</small>
+                                <input type="text" th:value="${entryForm.bibTexKey}"
+                                       th:field="*{bibTexKey}" />
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="form-column-right" class="form-group">
+                        <span>optional:</span>
+                        <ul th:each="fieldtype, stat : ${#lists.sort(entry.optional)}">
+                            <li>
+                                <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
+                                <input type="text" th:value="${entry.fields.get(fieldtype)}"
+                                       th:field="*{optionalList[__${stat.index}__]}" />
+                            </li>
+                        </ul>
+                        <input type="hidden" name="id" th:value="${entry.id}" />
+                        <input type="hidden" name="entry" th:field="${entry}" />
+                        <input type="hidden" name="sendAction" th:value="${sendAction}" />
+                        <button type="submit" name="" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </body>
 </html>
 

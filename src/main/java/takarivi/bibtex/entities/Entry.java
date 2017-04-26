@@ -19,10 +19,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
 import org.springframework.data.jpa.domain.AbstractPersistable;
+import org.springframework.security.core.userdetails.User;
 
 @Entity
 public class Entry extends AbstractPersistable<Long> implements Serializable {
@@ -35,6 +37,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     private String bibTexKey;
     @ElementCollection
     private List<String> authors;
+    private String authorString;
     private String title;
     @MapKeyClass(value = FieldType.class)
     @MapKeyEnumerated(value = EnumType.STRING)
@@ -51,13 +54,11 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @Enumerated(EnumType.STRING)
     private List<Tag> tags;
     
-    @ElementCollection
-    @ManyToMany
-    @Enumerated(EnumType.STRING)
-    private List<Customer> customers;
+    @ManyToOne
+    private Customer customer;
     
     public Entry() {
-        
+
     }
 
     public Entry(EntryType entryType) {
@@ -66,7 +67,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.required = entryType.getRequired();
         this.optional = entryType.getOptional();
         this.tags = new ArrayList<>();
-        this.customers = new ArrayList<>();
+        this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
             System.out.println(req);
             fields.put(req, "");
@@ -123,7 +124,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     }
 
     public void setRequired(Set<FieldType> required) {
-        this.required = required;
+        this.required = required;   
     }
     
     public Set<FieldType> getOptional() {
@@ -179,13 +180,14 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.title = title;
     }
 
-    public List<Customer> getCustomers() {
-        return customers;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public void setCustomers(List<Customer> customers) {
-        this.customers = customers;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
+
     
     public void setAuthorsAndTitle() {
         if (getFields().containsKey(FieldType.AUTHOR) && !getFields().get(FieldType.AUTHOR).equals("")) {
@@ -197,6 +199,10 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         }
     }
     
+    public String getAuthorString() {
+        return getFields().containsKey(FieldType.AUTHOR) ? getFields().get(FieldType.AUTHOR) : "";
+    }
+    
     public String createBibTexKey() {
         if (!getFields().containsKey(FieldType.AUTHOR)) {
             return "";
@@ -204,11 +210,11 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         
         StringBuilder sb = new StringBuilder();
         
-        String[] authors = getField(FieldType.AUTHOR).split(" and ");
-        if (authors.length <= 1) {
-            sb.append(authors[0].substring(0, 3).toUpperCase());
+        String[] auths = getField(FieldType.AUTHOR).split(" and ");
+        if (auths.length <= 1) {
+            sb.append(auths[0].substring(0, 3).toUpperCase());
         } else {
-            for (String author : authors) {
+            for (String author : auths) {
                 sb.append(author.toUpperCase().charAt(0));
             }
         }

@@ -12,6 +12,8 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import takarivi.bibtex.util.BibTexFormatter;
+import takarivi.bibtex.util.Formatter;
 
 /**
  *
@@ -34,5 +36,18 @@ public class EntryService {
     
     public Entry findById(long id) {
         return entryRepository.findOne(id);
+    }
+    
+    public void delete(Entry entry) {
+        entryRepository.delete(entry);
+    }
+    
+    public String formatBibTex(List<Entry> entries) {
+        BibTexFormatter formatter = new BibTexFormatter();
+        String output = "";
+        for (Entry e : entries) {
+            output += formatter.buildString(e);
+        }
+        return output;
     }
 }

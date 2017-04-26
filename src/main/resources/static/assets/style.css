@@ -1,0 +1,23 @@
+#main-container{
+    max-width: 1200px;
+    padding: 10px 25px;
+    margin: 0px auto;
+}
+
+#form {
+    
+}
+
+#form-column-left {
+    float: left;
+    width: 48%;
+    display: block;
+    margin: 20px auto;
+}
+
+#form-column-right {
+    float: right;
+    width: 48%;
+    display: block;
+    margin: 20px auto;
+}
