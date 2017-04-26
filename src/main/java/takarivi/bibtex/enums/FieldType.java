@@ -18,7 +18,12 @@ public enum FieldType {
     PAGES("Pages", ContentType.STRING),
     PUBLISHER("Publisher", ContentType.STRING),
     SERIES("Series", ContentType.STRING),
-    VOLUME("Volume", ContentType.STRING);
+    VOLUME("Volume", ContentType.STRING),
+    HOWPUBLISHED("Howpublished", ContentType.STRING),
+    TYPE("Type", ContentType.STRING),
+    CHAPTER("Chapter", ContentType.STRING),
+    SCHOOL("School", ContentType.STRING),
+    INSTITUTION("Institution", ContentType.STRING);
 
     private final String title;
     private final ContentType contentType;

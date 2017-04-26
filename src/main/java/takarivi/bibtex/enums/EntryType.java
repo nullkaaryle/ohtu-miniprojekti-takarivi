@@ -18,7 +18,53 @@ public enum EntryType {
         toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.BOOKTITLE, FieldType.YEAR),
         toList(FieldType.EDITOR, FieldType.VOLUME, FieldType.SERIES, FieldType.PAGES,
               FieldType.ADDRESS, FieldType.MONTH, FieldType.ORGANIZATION, FieldType.PUBLISHER,
-              FieldType.NOTE, FieldType.KEY));
+              FieldType.NOTE, FieldType.KEY)
+    ), BOOKLET ( 
+        "booklet",
+        toList(FieldType.TITLE),
+        toList(FieldType.AUTHOR, FieldType.HOWPUBLISHED, FieldType.ADDRESS, 
+              FieldType.MONTH, FieldType.YEAR, FieldType.NOTE, FieldType.KEY)
+    ), INBOOK (
+        "inbook",
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.PAGES, FieldType.PUBLISHER, FieldType.YEAR),
+        toList(FieldType.VOLUME, FieldType.SERIES, FieldType.TYPE, FieldType.ADDRESS, 
+              FieldType.EDITION, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+    ), INCOLLECTION (
+        "incollection",
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.BOOKTITLE, FieldType.PUBLISHER, FieldType.YEAR),
+        toList(FieldType.EDITOR, FieldType.VOLUME, FieldType.SERIES, FieldType.TYPE, FieldType.CHAPTER, FieldType.PAGES, 
+              FieldType.ADDRESS, FieldType.EDITION, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+    ), MANUAL (
+        "manual",
+        toList(FieldType.TITLE),
+        toList(FieldType.AUTHOR, FieldType.ORGANIZATION, FieldType.ADDRESS, FieldType.EDITION,
+              FieldType.MONTH, FieldType.YEAR, FieldType.NOTE, FieldType.KEY)
+    ), MASTERTHESIS (
+        "masterthesis", 
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.SCHOOL, FieldType.YEAR),
+        toList(FieldType.TYPE, FieldType.ADDRESS, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+    ), MISC (
+        "misc",
+        toList(FieldType.TITLE),
+        toList(FieldType.AUTHOR, FieldType.HOWPUBLISHED, FieldType.MONTH, FieldType.YEAR, FieldType.NOTE, FieldType.KEY)
+    ), PHDTHESIS (
+        "phdthesis",
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.SCHOOL, FieldType.YEAR),
+        toList(FieldType.TYPE, FieldType.ADDRESS, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+    ), PROCEEDINGS (
+        "proceedings",
+        toList(FieldType.TITLE, FieldType.YEAR),
+        toList(FieldType.EDITOR, FieldType.VOLUME, FieldType.SERIES, FieldType.ADDRESS, FieldType.MONTH, 
+              FieldType.PUBLISHER, FieldType.ORGANIZATION, FieldType.NOTE, FieldType.KEY)
+    ), TECHREPORT (
+        "techreport",
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.INSTITUTION, FieldType.YEAR),
+        toList(FieldType.TYPE, FieldType.VOLUME, FieldType.ADDRESS, FieldType.MONTH, FieldType.NOTE, FieldType.KEY)
+    ), UNPUBLISHED (
+        "unpublished",
+        toList(FieldType.AUTHOR, FieldType.TITLE, FieldType.NOTE),
+        toList(FieldType.MONTH, FieldType.YEAR, FieldType.KEY)
+    );
 
     private final String name;
     private final Set<FieldType> required;
