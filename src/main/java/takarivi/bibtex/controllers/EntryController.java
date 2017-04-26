@@ -56,55 +56,6 @@ public class EntryController {
         return "redirect:/list";
     }
 
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String listEntries(Model model) {
-        List<Entry> entries = entryService.findall();
-        model.addAttribute("entries", entries);
-        EntryTypeForm entryTypeForm = new EntryTypeForm();
-        List<String> entryTypes = new ArrayList<>();
-        for (EntryType et : EntryType.values()) {
-            entryTypes.add(et.toString());
-        }
-        entryTypeForm.setEntryTypes(entryTypes);
-        model.addAttribute("entryTypeForm", entryTypeForm);
-        model.addAttribute("entryCheckBoxForm", new EntryListForm());
-//        model.addAttribute("userLoggedIn", customerService.findByUsername("testi"/*auth.getName()*/));
-//        System.out.println(customerService.findByUsername("testi"));
-//        System.out.println(customerDetailsService.loadUserByUsername("testi"));
-        return "list";
-    }
-
-    @RequestMapping(value = "/list/selected", params = "action=remove", method = RequestMethod.POST)
-    public String removeSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm) {
-        for (Long id : entryCheckBoxForm.getSelected()) {
-            Entry entry = entryService.findById(id);
-            if (entry != null) {
-                entryService.delete(entry);
-            }
-        }
-        return "redirect:/list";
-    }
-    
-    @RequestMapping(value = "/list/selected", params = "action=bibtex", method = RequestMethod.POST,
-                    produces = "application/x-bibtex")
-    @ResponseBody
-    public String bibtexSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm,
-                                 HttpServletResponse response) {
-        List<Entry> entries = new ArrayList<>();
-        for (Long id : entryCheckBoxForm.getSelected()) {
-            Entry entry = entryService.findById(id);
-            if (entry != null) {
-                entries.add(entry);
-            }
-        }
-        String filename = "default";
-        if (!entryCheckBoxForm.getFilename().equals("")) {
-            filename = entryCheckBoxForm.getFilename();
-        }
-        response.addHeader("Content-disposition", "attachment; filename=\""+filename+".bib\"");
-        return entryService.formatBibTex(entries);
-    }
-
     @RequestMapping(value = "/addnew", method = RequestMethod.POST)
     public String addEntryOfEntryType(Model model, @ModelAttribute EntryTypeForm entryTypeForm) {
         for (EntryType et : EntryType.values()) {
@@ -192,6 +143,7 @@ public class EntryController {
         entryForm.setAction("edit");
         entryForm.setId(id);
         entryForm.setBibTexKey(entry.getBibTexKey());
+        model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
         model.addAttribute("entryForm", entryForm);
         model.addAttribute("sendAction", "edit");

@@ -69,11 +69,9 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.tags = new ArrayList<>();
         this.authors = new ArrayList<>();
         for (FieldType req : entryType.getRequired()) {
-            System.out.println(req);
             fields.put(req, "");
         }
         for (FieldType opt : entryType.getOptional()) {
-            System.out.println(opt);
             fields.put(opt, "");
         }
     }
