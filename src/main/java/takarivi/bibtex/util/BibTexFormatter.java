@@ -37,7 +37,6 @@ public class BibTexFormatter implements Formatter {
             if (field == null) {
                 break;
             }
-
             if (!(field.equals(""))) {
                 builder.append(ft.toString());
                 builder.append(" = {");
@@ -47,9 +46,7 @@ public class BibTexFormatter implements Formatter {
         }
         builder.append("}");
         builder.append("\n\n");
-
         String bibtex = builder.toString();
-
         return bibtex;
     }
 }
