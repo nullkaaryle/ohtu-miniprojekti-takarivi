@@ -28,7 +28,10 @@ public class Customer extends AbstractPersistable<Long> implements Serializable 
     @Enumerated(EnumType.STRING)
     private List<Entry> entries;
 
-
+    public Customer() {
+        
+    }
+    
     public Customer(String username, String password) {
         this.username = username;
         this.password = password;
