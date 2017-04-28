@@ -100,7 +100,6 @@ public class EntryController {
         FieldType[] opt = fieldTypesOrdered(entry.getOptional());
         setEntryFields(entry, entryForm, req, opt);
         entry.setAuthorsAndTitle();
-        System.out.println(entryForm.getBibTexKey());
         if (entryForm.getBibTexKey().equals("")) {
             entry.setBibTexKey(entry.createBibTexKey());
         } else {
