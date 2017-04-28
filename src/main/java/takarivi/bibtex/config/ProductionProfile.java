@@ -27,7 +27,7 @@ public class ProductionProfile {
 //    }
     
     @Bean
-    private static EntityManagerFactory buildEntityManagerFactory() {
+    public static EntityManagerFactory buildEntityManagerFactory() {
         return Persistence.createEntityManagerFactory("JPA");
     }
 }    
