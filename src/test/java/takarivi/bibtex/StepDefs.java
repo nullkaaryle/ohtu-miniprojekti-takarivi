@@ -20,6 +20,7 @@ import takarivi.bibtex.services.EntryService;
 @SpringBootTest
 public class StepDefs {
 
+    // muutos että voi deployata uudelleen
     WebDriver driver;
     String baseUrl = "http://localhost:8080/list";
 
