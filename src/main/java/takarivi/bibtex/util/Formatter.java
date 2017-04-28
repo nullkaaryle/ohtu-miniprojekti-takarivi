@@ -15,7 +15,7 @@ import takarivi.bibtex.entities.Entry;
  */
 public interface Formatter {
     
-    public void export(List<Entry> entries, String filename);
+    public String export(List<Entry> entries);
     
     
 }
