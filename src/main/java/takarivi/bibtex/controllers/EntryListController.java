@@ -22,6 +22,7 @@ import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
 import takarivi.bibtex.services.EntryService;
+import takarivi.bibtex.util.BibTexFormatter;
 
 /**
  *
@@ -71,7 +72,7 @@ public class EntryListController {
             filename = entryCheckBoxForm.getFilename();
         }
         response.addHeader("Content-disposition", "attachment; filename=\""+filename+".bib\"");
-        return entryService.formatBibTex(entries);
+        return entryService.format(entries, new BibTexFormatter());
     }
     
 }
