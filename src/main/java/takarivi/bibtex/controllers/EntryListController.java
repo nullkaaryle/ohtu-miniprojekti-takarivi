@@ -56,12 +56,7 @@ public class EntryListController {
 
     @RequestMapping(value = "/list/selected", params = "action=remove", method = RequestMethod.POST)
     public String removeSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm) {
-        for (Long id : entryCheckBoxForm.getSelected()) {
-            Entry entry = entryService.findById(id);
-            if (entry != null) {
-                entryService.delete(entry);
-            }
-        }
+        entryService.deleteByListOfIds(entryCheckBoxForm.getSelected());
         return "redirect:/list";
     }
     
@@ -70,13 +65,7 @@ public class EntryListController {
     @ResponseBody
     public String bibtexSelected(Model model, @ModelAttribute EntryListForm entryCheckBoxForm,
                                  HttpServletResponse response) {
-        List<Entry> entries = new ArrayList<>();
-        for (Long id : entryCheckBoxForm.getSelected()) {
-            Entry entry = entryService.findById(id);
-            if (entry != null) {
-                entries.add(entry);
-            }
-        }
+        List<Entry> entries = entryService.findByListOfIds(entryCheckBoxForm.getSelected());
         String filename = "default";
         if (!entryCheckBoxForm.getFilename().equals("")) {
             filename = entryCheckBoxForm.getFilename();

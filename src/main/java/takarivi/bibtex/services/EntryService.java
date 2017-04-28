@@ -38,10 +38,28 @@ public class EntryService {
         return entryRepository.findOne(id);
     }
     
+    public List<Entry> findByListOfIds(List<Long> ids) {
+        List<Entry> entries = new ArrayList<>();
+        for (Long id : ids) {
+            Entry e = findById(id);
+            if (e != null) {
+                entries.add(e);
+            }
+        }
+        return entries;
+    }
+    
     public void delete(Entry entry) {
         entryRepository.delete(entry);
     }
     
+    public void deleteByListOfIds(List<Long> ids) {
+        List<Entry> entries = findByListOfIds(ids);
+        for (Entry e : entries) {
+            delete(e);
+        }
+    }
+
     public String formatBibTex(List<Entry> entries) {
         BibTexFormatter formatter = new BibTexFormatter();
         String output = "";
