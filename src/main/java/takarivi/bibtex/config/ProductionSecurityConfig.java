@@ -25,7 +25,7 @@ public class ProductionSecurityConfig extends WebSecurityConfigurerAdapter {
         // mahdollistetaan h2-konsolin käyttö
         http.csrf().disable();
         http.headers().frameOptions().sameOrigin();
-
+        http.authorizeRequests().anyRequest().permitAll();
 //        http.authorizeRequests()
 //                .antMatchers("/").permitAll()
 //                .antMatchers("/register/").permitAll()
