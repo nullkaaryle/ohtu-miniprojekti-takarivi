@@ -14,7 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile("production")
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 public class ProductionSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
