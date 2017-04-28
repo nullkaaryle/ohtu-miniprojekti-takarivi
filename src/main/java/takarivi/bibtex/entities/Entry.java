@@ -205,9 +205,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         if (!getFields().containsKey(FieldType.AUTHOR)) {
             return "";
         }
-        
         StringBuilder sb = new StringBuilder();
-        
         String[] auths = getField(FieldType.AUTHOR).split(" and ");
         if (auths.length <= 1) {
             sb.append(auths[0].substring(0, 3).toUpperCase());
@@ -216,7 +214,6 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
                 sb.append(author.toUpperCase().charAt(0));
             }
         }
-        
         String year = getField(FieldType.YEAR);
         if (!year.equals("")) {
             if (year.length() > 2) {
@@ -225,17 +222,6 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
                 sb.append(year.substring(Math.max(0, year.length() - 4), year.length()));
             }
         }
-        
         return sb.toString();
     }
-    
-//    public boolean validate() {
-//        for (FieldType req : required) {
-//            if (!fields.containsKey(req) || fields.get(req) == null) {
-//               return false; 
-//            }
-//        }
-//        
-//        return true;
-//    }
 }
