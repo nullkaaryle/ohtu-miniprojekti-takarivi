@@ -23,6 +23,8 @@ import takarivi.bibtex.util.Formatter;
 public class EntryService {
     @Autowired
     private EntryRepository entryRepository;
+    private BibTexFormatter formatter = new BibTexFormatter();
+
     
     public List<Entry> findall() {
         List<Entry> entries = new ArrayList<>();
@@ -61,11 +63,6 @@ public class EntryService {
     }
 
     public String formatBibTex(List<Entry> entries) {
-        BibTexFormatter formatter = new BibTexFormatter();
-        String output = "";
-        for (Entry e : entries) {
-            output += formatter.buildString(e);
-        }
-        return output;
+        return formatter.export(entries);
     }
 }
