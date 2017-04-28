@@ -57,6 +57,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-devtools')
 	compile('org.springframework.security:spring-security-web:4.2.3.BUILD-SNAPSHOT')
+	compile('org.hibernate:hibernate-validator:5.4.1.Final')
 	compile('org.postgresql:postgresql:9.4-1201-jdbc4')
 	compile('org.apache.commons:commons-dbcp2:2.0')
 	compile("com.heroku.sdk:heroku-jdbc:0.1.1")

@@ -1,8 +1,7 @@
 package takarivi.bibtex.config;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import org.apache.commons.dbcp2.BasicDataSource;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -26,5 +25,10 @@ public class ProductionProfile {
 //
 //        return basicDataSource;
 //    }
+    
+    @Bean
+    private static EntityManagerFactory buildEntityManagerFactory() {
+        return Persistence.createEntityManagerFactory("JPA");
+    }
 }    
 
