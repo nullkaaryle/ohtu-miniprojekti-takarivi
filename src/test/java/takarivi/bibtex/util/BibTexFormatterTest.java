@@ -46,17 +46,6 @@ public class BibTexFormatterTest {
         test.setField(FieldType.YEAR, "1999");
         
     }
-
-    @Test
-    public void kirjoittaaTiedostoon() {
-        boolean tyhja = false;
-        String tiedostonSisalto = formatter.fileToString();
-        if (tiedostonSisalto.isEmpty()) {
-            tyhja = true;
-        }
-        
-        assertEquals(false, tyhja);
-    }
     
     @Test
     public void kirjoittaaOikein() {
