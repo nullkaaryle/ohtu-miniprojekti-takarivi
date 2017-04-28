@@ -93,4 +93,13 @@ task( browse, dependsOn: 'classes', type: JavaExec ) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task(stage, dependsOn: ['build', 'clean'])
+build.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+	into "$buildDir/lib"
+	from(configurations.compile)
+}
+stage.dependsOn(copyToLib)
+
 mainClassName = 'takarivi.bibtex.App'
