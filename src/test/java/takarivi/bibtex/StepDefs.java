@@ -5,16 +5,16 @@ import cucumber.api.java.After;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import takarivi.bibtex.services.EntryService;
 
 @SpringBootTest
@@ -22,9 +22,6 @@ public class StepDefs {
 
     WebDriver driver;
     String baseUrl = "http://localhost:8080/list";
-    String addBookUrl = "http://localhost:8080/add/book/";
-    String addArticleUrl = "http://localhost:8080/add/article/";
-    String addInproceedingsUrl = "http://localhost:8080/add/inproceedings/";
 
     @Autowired(required = true)
     public EntryService entryService;
@@ -38,8 +35,6 @@ public class StepDefs {
         }
         String absolutePath = file.getAbsolutePath();
         System.setProperty("webdriver.chrome.driver", absolutePath);
-
-//        this.driver = new FirefoxDriver();
         this.driver = new ChromeDriver();
     }
 
@@ -55,21 +50,21 @@ public class StepDefs {
     }
 
 //GIVEN
-    @Given("^add book is selected$")
-    public void add_book_is_selected() throws Throwable {
-        driver.get(addBookUrl);
-    }
-
     @Given("^add article is selected$")
     public void add_article_is_selected() throws Throwable {
-        driver.get(addArticleUrl);
+        selectEntrytypeToBeAdded("article");
     }
 
     @Given("^add inproceedings is selected$")
     public void add_inproceedings_is_selected() throws Throwable {
-        driver.get(addInproceedingsUrl);
+        selectEntrytypeToBeAdded("inproceedings");
     }
-    
+
+    @Given("^add book is selected$")
+    public void add_book_is_selected() throws Throwable {
+        selectEntrytypeToBeAdded("book");
+    }
+
     @Given("^article is added$")
     public void article_is_added() throws Throwable {
         add_book_is_selected();
@@ -196,9 +191,12 @@ public class StepDefs {
 
         element.submit();
     }
-    
+
     @When("^the reference is selected and remove button clicked$")
     public void the_reference_is_selected_and_remove_button_clicked() throws Throwable {
+        WebElement element = driver.findElement(By.linkText("Remove"));
+        element.click();
+        driver.switchTo().alert().accept();
     }
 
 //THEN
@@ -211,19 +209,28 @@ public class StepDefs {
     public void a_prompt_is_showed() throws Throwable {
         pageHasContent("required");
     }
-    
+
     @Then("^the reference is removed$")
     public void the_reference_is_removed() throws Throwable {
-        pageHasContent("");
+    //ei ole listaussivulla id-sarakkeessa id:tä 1        
+        
     }
 
 //HELPER METHODS
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }
+    
+    private void pageDoesNotHaveContent(String content) {
+        assertFalse(driver.getPageSource().contains(content));
+    }
 
-    private void pageHasText(String text) {
-        //     assertTrue(driver.findElement(By.xpath("//select[@id='category']/option[@id='cat2']")));
+    private void selectEntrytypeToBeAdded(String entrytype) {
+        driver.get(baseUrl);
+        Select dropdown = new Select(driver.findElement(By.id("selection")));
+        dropdown.selectByValue(entrytype);
+        WebElement element = driver.findElement(By.name("add"));
+        element.click();
     }
 
 }
@@ -233,10 +240,4 @@ public class StepDefs {
 //        List<Entry> entries = entryService.findall();
 //        assertTrue(!entries.isEmpty());
 //    }
-        //Select dropdown = new Select(driver.findElement(By.cssSelector("book")));
 
-    
-
-    
-
-    
