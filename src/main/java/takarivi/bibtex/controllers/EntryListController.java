@@ -38,6 +38,7 @@ public class EntryListController {
             entryTypes.add(et.toString());
         }
         entryTypeForm.setEntryTypes(entryTypes);
+        model.addAttribute("title", "List entries");
         model.addAttribute("entryTypeForm", entryTypeForm);
         model.addAttribute("entryCheckBoxForm", new EntryListForm());
 //        model.addAttribute("userLoggedIn", customerService.findByUsername("testi"/*auth.getName()*/));

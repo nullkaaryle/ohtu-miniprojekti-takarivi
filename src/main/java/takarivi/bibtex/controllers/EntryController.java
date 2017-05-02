@@ -69,6 +69,7 @@ public class EntryController {
         entryForm.setId(entry.getId());
         entryForm.setEntryType(type);
 //        model.addAttribute("entry", entry);
+        model.addAttribute("title", "Add " + entryType.toString().toLowerCase());
         model.addAttribute("required", required);
         model.addAttribute("optional", optional);
         model.addAttribute("entryForm", entryForm);
@@ -125,29 +126,8 @@ public class EntryController {
         if (entry == null) {
             return "redirect:/list";
         }
-        System.out.println(entry.getField(FieldType.TITLE));
-        ArrayList<String> requiredList = new ArrayList<>(entry.getRequired().size());
-        ArrayList<String> optionalList = new ArrayList<>(entry.getOptional().size());
-        FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
-        Arrays.sort(req);
-        /*
-         Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
-         joissa kenttien arvot, yllä järjestellään taas FieldTypet
-         */
-        for (int idx = 0; idx < entry.getRequired().size(); idx++) {
-            requiredList.add(idx, entry.getField(req[idx]));
-        }
-        FieldType[] opt = entry.getOptional().toArray(new FieldType[entry.getOptional().size()]);
-        Arrays.sort(opt);
-        for (int idx = 0; idx < entry.getOptional().size(); idx++) {
-            optionalList.add(idx, entry.getField(opt[idx]));
-        }
-        entryForm.setRequiredList(requiredList);
-        entryForm.setOptionalList(optionalList);
-        entryForm.setAction("edit");
-        entryForm.setId(id);
-        entryForm.setBibTexKey(entry.getBibTexKey());
-        entryForm.setEntryType(type);
+        entryForm = createEntryForm(entry);
+        
         model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
         model.addAttribute("required", entry.getEntryType().getRequired());
@@ -173,6 +153,35 @@ public class EntryController {
         return ret;
     }
 
+    private EntryForm createEntryForm(Entry entry) {
+        EntryForm entryForm = new EntryForm();
+        
+        ArrayList<String> requiredList = new ArrayList<>(entry.getRequired().size());
+        ArrayList<String> optionalList = new ArrayList<>(entry.getOptional().size());
+        FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
+        Arrays.sort(req);
+        /*
+         Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
+         joissa kenttien arvot, yllä järjestellään taas FieldTypet
+         */
+        for (int idx = 0; idx < entry.getRequired().size(); idx++) {
+            requiredList.add(idx, entry.getField(req[idx]));
+        }
+        FieldType[] opt = entry.getOptional().toArray(new FieldType[entry.getOptional().size()]);
+        Arrays.sort(opt);
+        for (int idx = 0; idx < entry.getOptional().size(); idx++) {
+            optionalList.add(idx, entry.getField(opt[idx]));
+        }
+        entryForm.setRequiredList(requiredList);
+        entryForm.setOptionalList(optionalList);
+        entryForm.setAction("edit");
+        entryForm.setId(entry.getId());
+        entryForm.setBibTexKey(entry.getBibTexKey());
+        entryForm.setEntryType(entry.getEntryType().toString());
+    
+        return entryForm;
+    }
+    
     // siirretty
     private void setEntryFields(Entry entry, EntryForm entryForm, FieldType[] req, FieldType[] opt) {
         for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
