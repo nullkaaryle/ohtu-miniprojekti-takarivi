@@ -16,3 +16,6 @@ addons:
     packages:
       - libstdc++-4.9-dev
       - google-chrome-stable
+
+after_success:
+- ./gradlew jacocoTestReport coveralls
