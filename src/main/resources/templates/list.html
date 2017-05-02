@@ -80,9 +80,12 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <td colspan="5"></td>
+                        <td colspan="4"></td>
                         <td>
-                            <span><input type="checkbox" name="select-all" onclick="checkAll('entryList', true)" /> select all</span>
+                            <label for="select-all">select all</label>
+                        </td>
+                        <td>
+                            <span><input type="checkbox" name="select-all" onclick="checkAll('entryList', true)" /></span>
                         </td>
                         <td>
                             <button type="submit" name="action" value="remove"
@@ -104,30 +107,5 @@
                 </tbody>
             </table>
         </form>
-        <!--
-        <ul th:each="entry : ${entries}">
-            <li>
-                <a href="#" th:href="@{/edit/{entrytype}/{id}/(entrytype = ${entry.entryType}, id = ${entry.id})}">
-                    <span th:text="${entry.id}">id</span>
-                </a>
-                <span th:text="${entry.entryType}">type</span>
-                <span th:text="${entry.bibTexKey}">btkey</span>
-                <span>required:</span>
-                <ul th:each="fieldtype : ${#lists.sort(entry.required)}">
-                    <li>
-                        <span th:text="${fieldtype}">key</span>
-                        <span th:text="${entry.fields.get(fieldtype)}">value</span>
-                    </li>
-                </ul>
-                <span>optional:</span>
-                <ul th:each="fieldtype : ${#lists.sort(entry.optional)}">
-                    <li>
-                        <span th:text="${fieldtype}">key</span>
-                        <span th:text="${entry.fields.get(fieldtype)}">value</span>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        -->
     </body>
 </html>

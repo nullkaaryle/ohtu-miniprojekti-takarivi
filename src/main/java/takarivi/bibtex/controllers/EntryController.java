@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package takarivi.bibtex.controllers;
 
 import takarivi.bibtex.entities.Entry;
@@ -13,26 +8,22 @@ import takarivi.bibtex.services.EntryService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import takarivi.bibtex.builders.EntryBuilder;
 import takarivi.bibtex.forms.EntryListForm;
 import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
 
-/**
- *
- * @author pyykkomi
- */
 @Controller
 public class EntryController {
 
@@ -42,7 +33,8 @@ public class EntryController {
     public CustomerDetailsService customerDetailsService;
     @Autowired
     public CustomerService customerService;
-
+    public EntryBuilder entryBuilder = new EntryBuilder();
+    
     @RequestMapping(value = "/addrandom", method = RequestMethod.GET)
     public String addRandom(Model model) {
         Entry e = new Entry(EntryType.BOOK);
@@ -69,18 +61,25 @@ public class EntryController {
         if (entryType == null) {
             return "list";
         }
-        entry = new Entry(entryType);
+//        entry = new Entry(entryType);
+        Set<FieldType> required = entryType.getRequired();
+        Set<FieldType> optional = entryType.getOptional();
         EntryForm entryForm = new EntryForm();
         entryForm.setAction("add");
         entryForm.setId(entry.getId());
-        model.addAttribute("entry", entry);
+        entryForm.setEntryType(type);
+//        model.addAttribute("entry", entry);
+        model.addAttribute("required", required);
+        model.addAttribute("optional", optional);
         model.addAttribute("entryForm", entryForm);
         model.addAttribute("sendAction", "add");
         return "form";
     }
 
     @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
-    public String saveEntry(Model model, @PathVariable String type, @ModelAttribute Entry entry,
+    public String saveEntry(Model model, @PathVariable String type, 
+            @ModelAttribute TreeSet<FieldType> required, @ModelAttribute TreeSet<FieldType> optional,
+            /*@ModelAttribute Entry entry,*/
             @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
             HttpServletRequest request) {
         /*
@@ -88,24 +87,20 @@ public class EntryController {
          HashMapeja... yritetään selittää.
          */
         String path = request.getServletPath();
+        Entry entry = null;
         if (path.contains("add")) {
-            entry = new Entry(EntryType.valueOf(type.toUpperCase()));
+            entry = entryBuilder.create(EntryType.valueOf(type.toUpperCase()))
+                                .required(entryForm.getRequiredList())
+                                .optional(entryForm.getOptionalList())
+                                .bibTexKey(entryForm.getBibTexKey())
+                                .build();
         } else {
             entry = entryService.findById(entryForm.getId());
         }
-        FieldType[] req = fieldTypesOrdered(entry.getRequired());
-        FieldType[] opt = fieldTypesOrdered(entry.getOptional());
-        setEntryFields(entry, entryForm, req, opt);
-        entry.setAuthorsAndTitle();
-        if (entryForm.getBibTexKey().equals("")) {
-            entry.setBibTexKey(entry.createBibTexKey());
-        } else {
-            entry.setBibTexKey(entryForm.getBibTexKey());
-        }
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.isAuthenticated()) {
-//            entry.addCustomer();
-        }
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth.isAuthenticated()) {
+////            entry.addCustomer();
+//        }
         entryService.save(entry);
         return "redirect:/list";
     }
@@ -139,8 +134,11 @@ public class EntryController {
         entryForm.setAction("edit");
         entryForm.setId(id);
         entryForm.setBibTexKey(entry.getBibTexKey());
+        entryForm.setEntryType(type);
         model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
+        model.addAttribute("required", entry.getEntryType().getRequired());
+        model.addAttribute("optional", entry.getEntryType().getOptional());
         model.addAttribute("entryForm", entryForm);
         model.addAttribute("sendAction", "edit");
         return "form";
@@ -162,6 +160,7 @@ public class EntryController {
         return ret;
     }
 
+    // siirretty
     private void setEntryFields(Entry entry, EntryForm entryForm, FieldType[] req, FieldType[] opt) {
         for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
             String s = entryForm.getRequiredList().get(idx);

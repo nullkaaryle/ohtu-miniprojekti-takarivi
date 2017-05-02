@@ -17,6 +17,7 @@ public class EntryForm {
     private Long id;
     private String action;
     private String bibTexKey;
+    private String entryType;
     
     public String getAction() {
         return action;
@@ -56,6 +57,14 @@ public class EntryForm {
 
     public void setBibTexKey(String bibTexKey) {
         this.bibTexKey = bibTexKey;
+    }
+
+    public String getEntryType() {
+        return entryType;
+    }
+
+    public void setEntryType(String entryType) {
+        this.entryType = entryType;
     }
     
     

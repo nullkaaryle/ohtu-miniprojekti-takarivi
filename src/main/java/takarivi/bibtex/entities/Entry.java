@@ -24,7 +24,6 @@ import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import org.springframework.security.core.userdetails.User;
 
 @Entity
 public class Entry extends AbstractPersistable<Long> implements Serializable {
@@ -186,7 +185,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.customer = customer;
     }
 
-    
+    // siirretty
     public void setAuthorsAndTitle() {
         if (getFields().containsKey(FieldType.AUTHOR) && !getFields().get(FieldType.AUTHOR).equals("")) {
             String[] authorArray = getField(FieldType.AUTHOR).split(" and ");
