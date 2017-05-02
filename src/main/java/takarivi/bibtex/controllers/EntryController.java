@@ -61,14 +61,9 @@ public class EntryController {
         if (entryType == null) {
             return "list";
         }
-//        entry = new Entry(entryType);
         Set<FieldType> required = entryType.getRequired();
         Set<FieldType> optional = entryType.getOptional();
-        EntryForm entryForm = new EntryForm();
-        entryForm.setAction("add");
-        entryForm.setId(entry.getId());
-        entryForm.setEntryType(type);
-//        model.addAttribute("entry", entry);
+        EntryForm entryForm = new EntryForm(type, "add", entry.getId());
         model.addAttribute("title", "Add " + entryType.toString().toLowerCase());
         model.addAttribute("required", required);
         model.addAttribute("optional", optional);
@@ -83,10 +78,6 @@ public class EntryController {
             /*@ModelAttribute Entry entry,*/
             @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
             HttpServletRequest request) {
-        /*
-         Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
-         HashMapeja... yritetään selittää.
-         */
         String path = request.getServletPath();
         Entry entry = null;
         EntryType entryType = EntryType.valueOf(type.toUpperCase());
@@ -126,7 +117,7 @@ public class EntryController {
         if (entry == null) {
             return "redirect:/list";
         }
-        entryForm = createEntryForm(entry);
+        entryForm = new EntryForm(entry, "edit");
         
         model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
@@ -147,71 +138,6 @@ public class EntryController {
     }
 
     // helpers
-    private FieldType[] fieldTypesOrdered(Set<FieldType> fieldTypes) {
-        FieldType[] ret = fieldTypes.toArray(new FieldType[fieldTypes.size()]);
-        Arrays.sort(ret);
-        return ret;
-    }
-
-    private EntryForm createEntryForm(Entry entry) {
-        EntryForm entryForm = new EntryForm();
-        
-        ArrayList<String> requiredList = new ArrayList<>(entry.getRequired().size());
-        ArrayList<String> optionalList = new ArrayList<>(entry.getOptional().size());
-        FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
-        Arrays.sort(req);
-        /*
-         Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
-         joissa kenttien arvot, yllä järjestellään taas FieldTypet
-         */
-        for (int idx = 0; idx < entry.getRequired().size(); idx++) {
-            requiredList.add(idx, entry.getField(req[idx]));
-        }
-        FieldType[] opt = entry.getOptional().toArray(new FieldType[entry.getOptional().size()]);
-        Arrays.sort(opt);
-        for (int idx = 0; idx < entry.getOptional().size(); idx++) {
-            optionalList.add(idx, entry.getField(opt[idx]));
-        }
-        entryForm.setRequiredList(requiredList);
-        entryForm.setOptionalList(optionalList);
-        entryForm.setAction("edit");
-        entryForm.setId(entry.getId());
-        entryForm.setBibTexKey(entry.getBibTexKey());
-        entryForm.setEntryType(entry.getEntryType().toString());
-    
-        return entryForm;
-    }
-    
-    // siirretty
-    private void setEntryFields(Entry entry, EntryForm entryForm, FieldType[] req, FieldType[] opt) {
-        for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
-            String s = entryForm.getRequiredList().get(idx);
-            System.out.println(s);
-            entry.setField(req[idx], s);
-        }
-        for (int idx = 0; idx < entryForm.getOptionalList().size(); idx++) {
-            String s = entryForm.getOptionalList().get(idx);
-            entry.setField(opt[idx], s);
-        }
-    }
-
-    private FieldType findFieldType(String field) {
-        for (FieldType ft : FieldType.values()) {
-            if (ft.toString().equals(field)) {
-                return ft;
-            }
-        }
-
-        return null;
-    }
-
-    private FieldType findFieldTypeByOrder(Entry e, int idx) {
-        if (idx < 0 || idx > FieldType.values().length) {
-            return null;
-        }
-        return FieldType.values()[idx];
-    }
-
     private EntryType findEntryType(String type) {
         for (EntryType e : EntryType.values()) {
             if (e.toString().toLowerCase().equals(type)) {

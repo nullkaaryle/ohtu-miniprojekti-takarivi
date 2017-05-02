@@ -67,7 +67,7 @@
                         <td>
                             <span th:text="${entry.title}">title</span>
                         </td>
-                        <td>
+                        <td width="1%">
                             <input type="checkbox" th:field="*{selected}" th:value="${entry.id}" />
                         </td>
                         <td>
@@ -84,7 +84,7 @@
                         <td>
                             <label for="select-all">select all</label>
                         </td>
-                        <td>
+                        <td width="1%">
                             <span><input type="checkbox" name="select-all" onclick="checkAll('entryList', true)" /></span>
                         </td>
                         <td>
@@ -94,14 +94,23 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="5"></td>
+                        <td colspan="4"></td>
                         <td>
-                            <label>Filename:</label>
+                            <label for="filename">Filename:</label>
+                        </td>
+                        <td>
                             <input type="text" th:field="*{filename}" />
                         </td>
                         <td>
                             <button type="submit" name="action" value="bibtex"
                                     class="btn btn-default">BibTex selected</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6"></td>
+                        <td>
+                            <button type="submit" name="action" value="bibtexall"
+                                    class="btn btn-default">BibTex all</button>
                         </td>
                     </tr>
                 </tbody>
