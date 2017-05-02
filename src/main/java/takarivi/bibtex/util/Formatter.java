@@ -1,4 +1,3 @@
-
 package takarivi.bibtex.util;
 
 import java.util.List;

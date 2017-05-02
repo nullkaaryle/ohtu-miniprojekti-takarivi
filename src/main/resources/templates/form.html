@@ -10,17 +10,16 @@
         <div th:include="fragments/base :: menu"></div>
         <div id="main-container">
             <div id="form" class="row">
-                <form action="#" th:action="@{/{action}/{entrytype}/(action = ${entryForm.action}, entrytype = ${entry.entryType})}" method="POST" th:object="${entryForm}">
+                <form action="#" th:action="@{/{action}/{entrytype}/(action = ${entryForm.action}, entrytype = ${entryForm.entryType})}" method="POST" th:object="${entryForm}">
                     <div id="form-column-left" class="form-group">
                         <h3>Required fields</h3>
-                        <div th:each="fieldtype, stat : ${#lists.sort(entry.required)}"
+                        <div th:each="fieldtype, stat : ${#lists.sort(required)}"
                              class="form-group row">
                             <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}"
                                    class="col-2 col-form-label">label</label>
                             <div class="col-10">
                                 <input type="text" size="35"
                                        class="form-control"
-                                       th:value="${entry.fields.get(fieldtype)}" 
                                        th:field="*{requiredList[__${stat.index}__]}" 
                                        required="required" 
                                        autocomplete="off" />
@@ -40,19 +39,19 @@
                     </div>
                     <div id="form-column-right" class="form-group">
                         <h3>Optional fields:</h3>
-                        <div th:each="fieldtype, stat : ${#lists.sort(entry.optional)}"
+                        <div th:each="fieldtype, stat : ${#lists.sort(optional)}"
                              class="form-group row">
                             <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
                             <div class="col-10">
                                 <input type="text" size="35"
                                        class="form-control"
-                                       th:value="${entry.fields.get(fieldtype)}"
                                        th:field="*{optionalList[__${stat.index}__]}" 
                                        autocomplete="off" />
                             </div>
                         </div>
-                        <input type="hidden" name="id" th:value="${entry.id}" />
-                        <input type="hidden" name="entry" th:field="${entry}" />
+                        <!--<input type="hidden" name="id" th:value="${entry.id}" />
+                        <input type="hidden" name="entry" th:field="${entry}" />-->
+                        <input type="hidden" name="entryType" th:value="${entryType}" />
                         <input type="hidden" name="sendAction" th:value="${sendAction}" />
                         <div class="form-group row">
                             <button type="submit" name="" class="btn btn-primary">Save</button>

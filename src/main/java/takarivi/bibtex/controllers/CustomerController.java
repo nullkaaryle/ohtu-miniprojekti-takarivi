@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package takarivi.bibtex.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +13,6 @@ import takarivi.bibtex.forms.RegisterForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
 
-/**
- *
- * @author pyykkomi
- */
 @Controller
 @SessionAttributes({"customer"})
 public class CustomerController {
