@@ -24,7 +24,6 @@ import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
 import org.springframework.data.jpa.domain.AbstractPersistable;
-import org.springframework.security.core.userdetails.User;
 
 @Entity
 public class Entry extends AbstractPersistable<Long> implements Serializable {

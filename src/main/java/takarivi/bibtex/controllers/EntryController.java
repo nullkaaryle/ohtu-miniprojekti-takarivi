@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package takarivi.bibtex.controllers;
 
 import takarivi.bibtex.entities.Entry;
@@ -29,10 +24,6 @@ import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
 import takarivi.bibtex.services.CustomerService;
 
-/**
- *
- * @author pyykkomi
- */
 @Controller
 public class EntryController {
 
