@@ -34,7 +34,7 @@ public class EntryController {
     @Autowired
     public CustomerService customerService;
     public EntryBuilder entryBuilder = new EntryBuilder();
-    
+
     @RequestMapping(value = "/addrandom", method = RequestMethod.GET)
     public String addRandom(Model model) {
         Entry e = new Entry(EntryType.BOOK);
@@ -77,7 +77,7 @@ public class EntryController {
     }
 
     @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
-    public String saveEntry(Model model, @PathVariable String type, 
+    public String saveEntry(Model model, @PathVariable String type,
             @ModelAttribute TreeSet<FieldType> required, @ModelAttribute TreeSet<FieldType> optional,
             /*@ModelAttribute Entry entry,*/
             @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
@@ -88,14 +88,27 @@ public class EntryController {
          */
         String path = request.getServletPath();
         Entry entry = null;
+        EntryType entryType = EntryType.valueOf(type.toUpperCase());
+        if (entryType == null) {
+            return "redirect:/list";
+        }
         if (path.contains("add")) {
-            entry = entryBuilder.create(EntryType.valueOf(type.toUpperCase()))
+            entry = entryBuilder.create(entryType)
                                 .required(entryForm.getRequiredList())
                                 .optional(entryForm.getOptionalList())
                                 .bibTexKey(entryForm.getBibTexKey())
                                 .build();
         } else {
-            entry = entryService.findById(entryForm.getId());
+            Entry editEntry = entryService.findById(entryForm.getId());
+            if (editEntry != null) {
+                System.out.println(editEntry);
+                entry = entryBuilder.edit(editEntry)
+                                    .required(entryForm.getRequiredList())
+                                    .optional(entryForm.getOptionalList())
+                                    .bibTexKey(entryForm.getBibTexKey())
+                                    .build();
+                System.out.println(entry.getBibTexKey());
+            }
         }
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        if (auth.isAuthenticated()) {

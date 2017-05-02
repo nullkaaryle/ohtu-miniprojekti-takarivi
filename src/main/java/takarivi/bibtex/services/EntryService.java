@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import takarivi.bibtex.util.BibTexFormatter;
 import takarivi.bibtex.util.Formatter;
 
 /**
@@ -31,7 +30,13 @@ public class EntryService {
     }
     
     public void save(Entry entry) {
-        entryRepository.save(entry);
+        if (entry != null) {
+//            Entry oldEntry = findById(entry.getId());
+//            if (oldEntry != null) {
+//                delete(oldEntry);
+//            }
+            entryRepository.save(entry);
+        }
     }
     
     public Entry findById(long id) {

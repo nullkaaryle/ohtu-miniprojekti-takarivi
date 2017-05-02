@@ -5,8 +5,8 @@
  */
 package takarivi.bibtex.repositories;
 
-import takarivi.bibtex.entities.Entry;
 import org.springframework.data.jpa.repository.JpaRepository;
+import takarivi.bibtex.entities.Entry;
 import org.springframework.stereotype.Repository;
 
 /**

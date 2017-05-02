@@ -5,6 +5,7 @@
  */
 package takarivi.bibtex.builders;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,12 @@ public class EntryBuilder {
         return this;
     }
     
-    public EntryBuilder required(List<String> values) {
+    public EntryBuilder edit(Entry entry) {
+        this.entry = entry;
+        return this;
+    }
+    
+    public EntryBuilder required(ArrayList<String> values) {
         FieldType[] req = fieldTypesOrdered(entry.getRequired());
         for (int idx = 0; idx < values.size(); idx++) {
             String s = values.get(idx);
@@ -37,7 +43,7 @@ public class EntryBuilder {
         return this;
     }
     
-    public EntryBuilder optional(List<String> values) {
+    public EntryBuilder optional(ArrayList<String> values) {
         FieldType[] opt = fieldTypesOrdered(entry.getOptional());
         for (int idx = 0; idx < values.size(); idx++) {
             String s = values.get(idx);
@@ -71,7 +77,11 @@ public class EntryBuilder {
         if (entry.getFields().containsKey(FieldType.AUTHOR) && 
             !entry.getFields().get(FieldType.AUTHOR).equals("")) {
             String[] authorArray = entry.getField(FieldType.AUTHOR).split(" and ");
-            entry.setAuthors(Arrays.asList(authorArray));
+            List<String> authors = new ArrayList<>();
+            for (String author : authorArray) {
+                authors.add(author);
+            }
+            entry.setAuthors(authors); // asList palauttaa immutable listin :x
         }
         if (entry.getFields().containsKey(FieldType.TITLE) && 
             !entry.getFields().get(FieldType.TITLE).equals("")) {
