@@ -90,7 +90,7 @@ public class EntryBuilder {
         StringBuilder sb = new StringBuilder();
         String[] auths = entry.getField(FieldType.AUTHOR).split(" and ");
         if (auths.length <= 1) {
-            sb.append(auths[0].substring(0, 3).toUpperCase());
+            sb.append(auths[0].substring(0, Math.min(auths[0].length(), 3)).toUpperCase());
         } else {
             for (String author : auths) {
                 sb.append(author.toUpperCase().charAt(0));

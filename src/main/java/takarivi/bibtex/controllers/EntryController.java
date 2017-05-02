@@ -134,8 +134,11 @@ public class EntryController {
         entryForm.setAction("edit");
         entryForm.setId(id);
         entryForm.setBibTexKey(entry.getBibTexKey());
+        entryForm.setEntryType(type);
         model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
+        model.addAttribute("required", entry.getEntryType().getRequired());
+        model.addAttribute("optional", entry.getEntryType().getOptional());
         model.addAttribute("entryForm", entryForm);
         model.addAttribute("sendAction", "edit");
         return "form";
