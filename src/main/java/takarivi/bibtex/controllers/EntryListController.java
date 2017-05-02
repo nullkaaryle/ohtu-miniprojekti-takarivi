@@ -67,4 +67,17 @@ public class EntryListController {
         return entryService.format(entries, new BibTexFormatter());
     }
     
+    @RequestMapping(value = "/list/selected", params = "action=bibtexall", method = RequestMethod.POST,
+                    produces = "application/x-bibtex")
+    @ResponseBody
+    public String bibtexAll(Model model, @ModelAttribute EntryListForm entryCheckBoxForm,
+                            HttpServletResponse response) {
+        List<Entry> entries = entryService.findall();
+        String filename = "default";
+        if (!entryCheckBoxForm.getFilename().equals("")) {
+            filename = entryCheckBoxForm.getFilename();
+        }
+        response.addHeader("Content-disposition", "attachment; filename=\""+filename+".bib\"");
+        return entryService.format(entries, new BibTexFormatter());
+    }
 }
