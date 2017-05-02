@@ -186,7 +186,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
         this.customer = customer;
     }
 
-    
+    // siirretty
     public void setAuthorsAndTitle() {
         if (getFields().containsKey(FieldType.AUTHOR) && !getFields().get(FieldType.AUTHOR).equals("")) {
             String[] authorArray = getField(FieldType.AUTHOR).split(" and ");
