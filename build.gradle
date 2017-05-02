@@ -1,7 +1,3 @@
-plugins {
-    id 'com.github.kt3k.coveralls' version '2.8.1'
-}
-
 buildscript {
 	ext {
 		springBootVersion = '1.5.2.RELEASE'
@@ -18,6 +14,10 @@ apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'jacoco'
+
+plugins {
+    id 'com.github.kt3k.coveralls' version '2.8.1'
+}
 
 jar {
     manifest {
