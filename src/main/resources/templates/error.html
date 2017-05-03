@@ -1,0 +1,18 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:th="http://www.thymeleaf.org" 
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <head th:include="fragments/base :: head(title=${title})">
+        <title>title</title>
+    </head>
+    
+    <body>
+        <div th:include="fragments/base :: menu"></div>
+        <div id="main-container">
+            <p th:text="*{error.exception}">Default Error Message</p>
+            <p th:text="*{error.exception_type}">Default Error Message</p>
+            <p th:text="*{error.request_uri}">Default Error Message</p>
+            <p th:text="*{error.servlet_name}">Default Error Message</p>
+        </div>
+    </body>
+</html>

@@ -206,7 +206,7 @@ public class StepDefs {
 
     @Then("^a prompt is showed$")
     public void a_prompt_is_showed() throws Throwable {
-        pageHasContent("required");
+        pageHasContent("Required");
     }
 
     @Then("^the reference is removed$")

@@ -38,6 +38,7 @@ public class EntryListController {
             entryTypes.add(et.toString());
         }
         entryTypeForm.setEntryTypes(entryTypes);
+        model.addAttribute("title", "List entries");
         model.addAttribute("entryTypeForm", entryTypeForm);
         model.addAttribute("entryCheckBoxForm", new EntryListForm());
 //        model.addAttribute("userLoggedIn", customerService.findByUsername("testi"/*auth.getName()*/));
@@ -66,4 +67,17 @@ public class EntryListController {
         return entryService.format(entries, new BibTexFormatter());
     }
     
+    @RequestMapping(value = "/list/selected", params = "action=bibtexall", method = RequestMethod.POST,
+                    produces = "application/x-bibtex")
+    @ResponseBody
+    public String bibtexAll(Model model, @ModelAttribute EntryListForm entryCheckBoxForm,
+                            HttpServletResponse response) {
+        List<Entry> entries = entryService.findall();
+        String filename = "default";
+        if (!entryCheckBoxForm.getFilename().equals("")) {
+            filename = entryCheckBoxForm.getFilename();
+        }
+        response.addHeader("Content-disposition", "attachment; filename=\""+filename+".bib\"");
+        return entryService.format(entries, new BibTexFormatter());
+    }
 }

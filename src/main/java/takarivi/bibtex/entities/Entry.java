@@ -23,6 +23,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyClass;
 import javax.persistence.MapKeyEnumerated;
 import javax.persistence.OrderColumn;
+import javax.persistence.Version;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
@@ -53,6 +54,9 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @Enumerated(EnumType.STRING)
     private List<Tag> tags;
     
+    @Version
+    private Long version;
+    
     @ManyToOne
     private Customer customer;
     
@@ -78,6 +82,11 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     public Long getId() {
         return id;
     }
+    
+//    @Override
+//    public boolean isNew() {
+//        return version == null;
+//    }
     
     public Set<FieldType> getFieldTypes() {
         return fields.keySet();

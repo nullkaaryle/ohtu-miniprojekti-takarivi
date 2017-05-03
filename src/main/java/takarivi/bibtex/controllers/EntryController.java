@@ -34,7 +34,7 @@ public class EntryController {
     @Autowired
     public CustomerService customerService;
     public EntryBuilder entryBuilder = new EntryBuilder();
-    
+
     @RequestMapping(value = "/addrandom", method = RequestMethod.GET)
     public String addRandom(Model model) {
         Entry e = new Entry(EntryType.BOOK);
@@ -61,14 +61,10 @@ public class EntryController {
         if (entryType == null) {
             return "list";
         }
-//        entry = new Entry(entryType);
         Set<FieldType> required = entryType.getRequired();
         Set<FieldType> optional = entryType.getOptional();
-        EntryForm entryForm = new EntryForm();
-        entryForm.setAction("add");
-        entryForm.setId(entry.getId());
-        entryForm.setEntryType(type);
-//        model.addAttribute("entry", entry);
+        EntryForm entryForm = new EntryForm(type, "add", entry.getId());
+        model.addAttribute("title", "Add " + entryType.toString().toLowerCase());
         model.addAttribute("required", required);
         model.addAttribute("optional", optional);
         model.addAttribute("entryForm", entryForm);
@@ -77,25 +73,34 @@ public class EntryController {
     }
 
     @RequestMapping(value = {"/add/{type}/", "/edit/{type}/"}, method = RequestMethod.POST)
-    public String saveEntry(Model model, @PathVariable String type, 
+    public String saveEntry(Model model, @PathVariable String type,
             @ModelAttribute TreeSet<FieldType> required, @ModelAttribute TreeSet<FieldType> optional,
             /*@ModelAttribute Entry entry,*/
             @ModelAttribute EntryForm entryForm, @ModelAttribute String sendAction,
             HttpServletRequest request) {
-        /*
-         Tää on aivan hirveetä spagettia syystä ettei Thymeleaf osaa kunnolla
-         HashMapeja... yritetään selittää.
-         */
         String path = request.getServletPath();
         Entry entry = null;
+        EntryType entryType = EntryType.valueOf(type.toUpperCase());
+        if (entryType == null) {
+            return "redirect:/list";
+        }
         if (path.contains("add")) {
-            entry = entryBuilder.create(EntryType.valueOf(type.toUpperCase()))
+            entry = entryBuilder.create(entryType)
                                 .required(entryForm.getRequiredList())
                                 .optional(entryForm.getOptionalList())
                                 .bibTexKey(entryForm.getBibTexKey())
                                 .build();
         } else {
-            entry = entryService.findById(entryForm.getId());
+            Entry editEntry = entryService.findById(entryForm.getId());
+            if (editEntry != null) {
+                System.out.println(editEntry);
+                entry = entryBuilder.edit(editEntry)
+                                    .required(entryForm.getRequiredList())
+                                    .optional(entryForm.getOptionalList())
+                                    .bibTexKey(entryForm.getBibTexKey())
+                                    .build();
+                System.out.println(entry.getBibTexKey());
+            }
         }
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 //        if (auth.isAuthenticated()) {
@@ -112,29 +117,8 @@ public class EntryController {
         if (entry == null) {
             return "redirect:/list";
         }
-        System.out.println(entry.getField(FieldType.TITLE));
-        ArrayList<String> requiredList = new ArrayList<>(entry.getRequired().size());
-        ArrayList<String> optionalList = new ArrayList<>(entry.getOptional().size());
-        FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
-        Arrays.sort(req);
-        /*
-         Täällä sama sitten toisin päin eli ThymeLeafille annetaan kaksi ArrayListiä
-         joissa kenttien arvot, yllä järjestellään taas FieldTypet
-         */
-        for (int idx = 0; idx < entry.getRequired().size(); idx++) {
-            requiredList.add(idx, entry.getField(req[idx]));
-        }
-        FieldType[] opt = entry.getOptional().toArray(new FieldType[entry.getOptional().size()]);
-        Arrays.sort(opt);
-        for (int idx = 0; idx < entry.getOptional().size(); idx++) {
-            optionalList.add(idx, entry.getField(opt[idx]));
-        }
-        entryForm.setRequiredList(requiredList);
-        entryForm.setOptionalList(optionalList);
-        entryForm.setAction("edit");
-        entryForm.setId(id);
-        entryForm.setBibTexKey(entry.getBibTexKey());
-        entryForm.setEntryType(type);
+        entryForm = new EntryForm(entry, "edit");
+        
         model.addAttribute("title", "Edit " + entry.getEntryType().toString());
         model.addAttribute("entry", entry);
         model.addAttribute("required", entry.getEntryType().getRequired());
@@ -154,42 +138,6 @@ public class EntryController {
     }
 
     // helpers
-    private FieldType[] fieldTypesOrdered(Set<FieldType> fieldTypes) {
-        FieldType[] ret = fieldTypes.toArray(new FieldType[fieldTypes.size()]);
-        Arrays.sort(ret);
-        return ret;
-    }
-
-    // siirretty
-    private void setEntryFields(Entry entry, EntryForm entryForm, FieldType[] req, FieldType[] opt) {
-        for (int idx = 0; idx < entryForm.getRequiredList().size(); idx++) {
-            String s = entryForm.getRequiredList().get(idx);
-            System.out.println(s);
-            entry.setField(req[idx], s);
-        }
-        for (int idx = 0; idx < entryForm.getOptionalList().size(); idx++) {
-            String s = entryForm.getOptionalList().get(idx);
-            entry.setField(opt[idx], s);
-        }
-    }
-
-    private FieldType findFieldType(String field) {
-        for (FieldType ft : FieldType.values()) {
-            if (ft.toString().equals(field)) {
-                return ft;
-            }
-        }
-
-        return null;
-    }
-
-    private FieldType findFieldTypeByOrder(Entry e, int idx) {
-        if (idx < 0 || idx > FieldType.values().length) {
-            return null;
-        }
-        return FieldType.values()[idx];
-    }
-
     private EntryType findEntryType(String type) {
         for (EntryType e : EntryType.values()) {
             if (e.toString().toLowerCase().equals(type)) {

@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div id="form-column-right" class="form-group">
-                        <h3>Optional fields:</h3>
+                        <h3>Optional fields</h3>
                         <div th:each="fieldtype, stat : ${#lists.sort(optional)}"
                              class="form-group row">
                             <label th:for="requiredList__${stat.index}__" th:text="${fieldtype}">label</label>
@@ -49,8 +49,8 @@
                                        autocomplete="off" />
                             </div>
                         </div>
-                        <!--<input type="hidden" name="id" th:value="${entry.id}" />
-                        <input type="hidden" name="entry" th:field="${entry}" />-->
+                        <input type="hidden" name="id" th:if="${entryForm.id}" th:field="*{id}" />
+                        <!--<input type="hidden" name="entry" th:field="${entry}" />-->
                         <input type="hidden" name="entryType" th:value="${entryType}" />
                         <input type="hidden" name="sendAction" th:value="${sendAction}" />
                         <div class="form-group row">
