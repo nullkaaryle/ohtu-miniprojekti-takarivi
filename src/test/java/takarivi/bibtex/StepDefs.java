@@ -212,11 +212,13 @@ public class StepDefs {
     }
 
 //HELPER METHODS
-    private void pageHasContent(String content) {
+    private void pageHasContent(String content) throws InterruptedException {
+        Thread.sleep(1000);
         assertTrue(driver.getPageSource().contains(content));
     }
 
-    private void pageDoesNotHaveContent(String content) {
+    private void pageDoesNotHaveContent(String content) throws InterruptedException {
+        Thread.sleep(1000);
         assertFalse(driver.getPageSource().contains(content));
     }
 
