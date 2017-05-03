@@ -20,7 +20,6 @@ import takarivi.bibtex.services.EntryService;
 @SpringBootTest
 public class StepDefs {
 
-//
     WebDriver driver;
     String baseUrl = "http://localhost:8080/list";
 
@@ -29,11 +28,13 @@ public class StepDefs {
 
     public StepDefs() {
         File file = new File("lib/linux/chromedriver");
+
         if (System.getProperty("os.name").matches("Mac OS X")) {
             file = new File("lib/mac/chromedriver");
         } else if (System.getProperty("os.name").matches("Windows")) {
             file = new File("lib/win/chromedriver.exe");
         }
+
         String absolutePath = file.getAbsolutePath();
         System.setProperty("webdriver.chrome.driver", absolutePath);
         this.driver = new ChromeDriver();
@@ -77,19 +78,18 @@ public class StepDefs {
     public void valid_book_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "Clean Code: A Handbook of Agile Software Craftsmanship", "2012", "Addison-Wesley Professional"};
+        String requiredList[] = {"Cynthia Andersson", "Clean Code: A Handbook of Agile Software Craftsmanship", "2012", "Addison-Wesley Professional"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
             element.sendKeys(optionalList[i]);
         }
-
+        
         element.submit();
     }
 
@@ -97,19 +97,18 @@ public class StepDefs {
     public void invalid_book_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "", "2012", "Addison-Wesley Professional"};
+        String requiredList[] = {"Cynthia Andersson", "", "2012", "Addison-Wesley Professional"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
             element.sendKeys(optionalList[i]);
         }
-
+        
         element.submit();
     }
 
@@ -117,19 +116,18 @@ public class StepDefs {
     public void valid_article_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "Clean Code: A Survey of Agile Software Craftsmanship", "2012", "The Code Magazine", "5"};
+        String requiredList[] = {"Cynthia Andersson", "Clean Code: A Survey of Agile Software Craftsmanship", "2012", "The Code Magazine", "5"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
             element.sendKeys(optionalList[i]);
         }
-
+        
         element.submit();
     }
 
@@ -137,19 +135,18 @@ public class StepDefs {
     public void invalid_article_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "Clean Code: A Survey of Agile Software Craftsmanship", "2012", "", "5"};
+        String requiredList[] = {"Cynthia Andersson", "Clean Code: A Survey of Agile Software Craftsmanship", "", "", "5"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
             element.sendKeys(optionalList[i]);
         }
-
+        
         element.submit();
     }
 
@@ -157,13 +154,12 @@ public class StepDefs {
     public void valid_inproceedings_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "Clean Code", "Happy Coding", "2012"};
+        String requiredList[] = {"Cynthia Andersson", "Clean Code", "Happy Coding", "2012"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", "", "", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
@@ -177,19 +173,18 @@ public class StepDefs {
     public void invalid_inproceedings_data_is_given() throws Throwable {
         WebElement element = null;
 
-        String requiredList[] = {"Cynthia Andres", "Clean Code", "", "2012"};
+        String requiredList[] = {"Cynthia Andersson", "Clean Code", "", "2012"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", "", "", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
             element.sendKeys(optionalList[i]);
         }
-
+        
         element.submit();
     }
 
@@ -203,25 +198,24 @@ public class StepDefs {
 //THEN
     @Then("^a list of references is showed$")
     public void a_list_of_references_is_showed() throws Throwable {
-        pageHasContent("Cynthia Andres");
+        pageDoesNotHaveContent("Required fields");
     }
 
     @Then("^a prompt is showed$")
     public void a_prompt_is_showed() throws Throwable {
-        pageHasContent("Required");
+        pageHasContent("");
     }
 
     @Then("^the reference is removed$")
     public void the_reference_is_removed() throws Throwable {
-    //ei ole listaussivulla id-sarakkeessa id:tä 1        
-        
+        assertTrue(driver.findElements(By.linkText("1")).isEmpty());
     }
 
 //HELPER METHODS
     private void pageHasContent(String content) {
         assertTrue(driver.getPageSource().contains(content));
     }
-    
+
     private void pageDoesNotHaveContent(String content) {
         assertFalse(driver.getPageSource().contains(content));
     }
@@ -234,11 +228,11 @@ public class StepDefs {
         element.click();
     }
 
+    private void sendKeysAsAList(WebElement element, String referenceDetailList[], String listType) {
+        for (int i = 0; i < referenceDetailList.length; i++) {
+            element = driver.findElement(By.name("" + listType + "List[" + i + "]"));
+            element.sendKeys(referenceDetailList[i]);
+        }
+    }
+
 }
-
-//    @Then("^entry is added$")
-//    public void entry_is_added() throws Throwable {
-//        List<Entry> entries = entryService.findall();
-//        assertTrue(!entries.isEmpty());
-//    }
-
