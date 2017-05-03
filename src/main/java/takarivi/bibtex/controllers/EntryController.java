@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import takarivi.bibtex.builders.EntryBuilder;
+import takarivi.bibtex.entities.builders.EntryBuilder;
 import takarivi.bibtex.forms.EntryListForm;
 import takarivi.bibtex.forms.EntryTypeForm;
 import takarivi.bibtex.services.CustomerDetailsService;
