@@ -115,14 +115,13 @@ public class StepDefs {
     @When("^valid article data is given$")
     public void valid_article_data_is_given() throws Throwable {
         WebElement element = null;
-
+        
         String requiredList[] = {"Cynthia Andersson", "Clean Code: A Survey of Agile Software Craftsmanship", "2012", "The Code Magazine", "5"};
         for (int i = 0; i < requiredList.length; i++) {
             element = driver.findElement(By.name("requiredList[" + i + "]"));
             element.sendKeys(requiredList[i]);
-
         }
-
+        
         String optionalList[] = {"", "", "", "", ""};
         for (int i = 0; i < optionalList.length; i++) {
             element = driver.findElement(By.name("optionalList[" + i + "]"));
@@ -230,6 +229,15 @@ public class StepDefs {
         dropdown.selectByValue(entrytype);
         WebElement element = driver.findElement(By.name("add"));
         element.click();
+    }
+    
+    private void sendKeysAsAList(WebElement element, String referenceDetailList[], String listType) {
+        String list[] = referenceDetailList;
+        
+        for (int i = 0; i < list.length; i++) {
+            element = driver.findElement(By.name(listType + "[" + i + "]"));
+            element.sendKeys(list[i]);
+        }
     }
 
 }
