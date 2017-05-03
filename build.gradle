@@ -83,15 +83,6 @@ dependencies {
 
 test {
     testLogging.showStandardStreams = true
-
-	jacoco {
-    	excludes = ['**/src/main/java/takarivi/bibtex/App.java',
-                     '**/src/main/java/takarivi/bibtex/config/**',
-                     '**/src/main/java/takarivi/bibtex/forms/**',
-                     '**/src/main/java/takarivi/bibtex/repositories/**',
-                     '**/src/main/java/takarivi/bibtex/services/**']
-  }
-
 }
 
 jacocoTestReport {
