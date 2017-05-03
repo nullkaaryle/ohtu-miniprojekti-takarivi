@@ -6,6 +6,9 @@
 package takarivi.bibtex.forms;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import takarivi.bibtex.entities.Entry;
+import takarivi.bibtex.enums.FieldType;
 
 /**
  *
@@ -18,6 +21,36 @@ public class EntryForm {
     private String action;
     private String bibTexKey;
     private String entryType;
+    
+    /* default constructor for spring */
+    public EntryForm() {
+        
+    }
+    
+    /* constructor for new entry */
+    public EntryForm(String type, String action, Long id) {
+        this.action = action;
+        this.id = id;
+        this.entryType = type;
+    }
+    
+    /* constructor for existing entry */
+    public EntryForm(Entry entry, String action) {
+        FieldType[] req = entry.getRequired().toArray(new FieldType[entry.getRequired().size()]);
+        Arrays.sort(req);
+        for (int idx = 0; idx < entry.getRequired().size(); idx++) {
+            requiredList.add(idx, entry.getField(req[idx]));
+        }
+        FieldType[] opt = entry.getOptional().toArray(new FieldType[entry.getOptional().size()]);
+        Arrays.sort(opt);
+        for (int idx = 0; idx < entry.getOptional().size(); idx++) {
+            optionalList.add(idx, entry.getField(opt[idx]));
+        }
+        this.action = action;
+        this.id = entry.getId();
+        this.bibTexKey = entry.getBibTexKey();
+        this.entryType = entry.getEntryType().toString();
+    }
     
     public String getAction() {
         return action;
