@@ -53,10 +53,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     @ManyToMany
     @Enumerated(EnumType.STRING)
     private List<Tag> tags;
-    
-    @Version
-    private Long version;
-    
+        
     @ManyToOne
     private Customer customer;
     
@@ -82,12 +79,7 @@ public class Entry extends AbstractPersistable<Long> implements Serializable {
     public Long getId() {
         return id;
     }
-    
-//    @Override
-//    public boolean isNew() {
-//        return version == null;
-//    }
-    
+        
     public Set<FieldType> getFieldTypes() {
         return fields.keySet();
     }
