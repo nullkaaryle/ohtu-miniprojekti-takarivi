@@ -10,3 +10,5 @@ Projektin backlog löytyy osoitteesta: https://docs.google.com/spreadsheets/d/1v
 Sprintit on kirjattu omille välilehdilleen.
 
 Sovellus löytyy osoitteesta: https://bibtex-takarivi.herokuapp.com/
+
+Loppuraportti löytyy osoitteesta: https://docs.google.com/document/d/1TQcjjVtLSIK-vDykl3ISthgcfgyCdiPujhnQjsRNgFE/edit?usp=sharing
